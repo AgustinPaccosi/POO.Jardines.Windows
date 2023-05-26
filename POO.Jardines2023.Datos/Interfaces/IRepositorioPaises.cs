@@ -12,5 +12,7 @@ namespace POO.Jardines2023.Datos.Interfaces
         int GetCantidad();
         List<Pais> GetPaises();
         Pais GetPaisPorId(int paisId);
+        List<Pais> FiltrarPais(Pais pais);
+
     }
 }

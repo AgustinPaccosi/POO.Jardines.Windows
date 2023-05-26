@@ -160,12 +160,12 @@ namespace POO.Jardines2023.Datos.Repositorios
                     string SelectQuery;
                     if (pais.PaisId == 0)
                     {
-                        SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises WHERE PaisId=@PaisId";
+                        SelectQuery = "SELECT COUNT(*) FROM dbo.Paises WHERE NombrePais=@NombrePais";
 
                     }
                     else
                     {
-                        SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises WHERE PaisId=@PaisId AND PaisId!=@PaisId";
+                        SelectQuery = "SELECT COUNT(*) FROM dbo.Paises WHERE  NombrePais=@NombrePais AND PaisId!=@PaisId";
 
                     }
                     using (var comando = new SqlCommand(SelectQuery, conn))
@@ -221,9 +221,34 @@ namespace POO.Jardines2023.Datos.Repositorios
             return pais;
         }
 
+        public List<Pais> FiltrarPais(Pais pais)
+        {
+            List<Pais> listaPais = new List<Pais>();
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises WHERE PaisId=@PaisId ";
+                using (var comando = new SqlCommand(SelectQuery, conn))
+                {
+                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                    comando.Parameters["@PaisId"].Value = pais.PaisId;
+
+                    using (var reader = comando.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var paiss = ConstruirPais(reader);
+                            listaPais.Add(paiss);
+                        }
+                    }
+                }
+            }
+            return listaPais;
+        }
+
         //public List<Pais> Filtrar(Pais pais)
         //{
-            
+
         //}
     }
 }

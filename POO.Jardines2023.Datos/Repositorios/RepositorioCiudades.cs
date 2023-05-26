@@ -198,5 +198,23 @@ namespace POO.Jardines2023.Datos.Repositorios
                 throw;
             }
         }
+
+        public int GetCantidadFiltrada(Pais pais)
+        {
+            int cantidad = 0;
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string SelectQuery = "SELECT COUNT(*) FROM dbo.Ciudades WHERE PaisId=@PaisId";
+                using (var cmd = new SqlCommand(SelectQuery, conn))
+                {
+                    cmd.Parameters.Add("@PaisId", SqlDbType.Int);
+                    cmd.Parameters["@PaisId"].Value = pais.PaisId;
+
+                    cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            return cantidad;
+        }
     }
 }

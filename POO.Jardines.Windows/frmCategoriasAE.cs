@@ -26,7 +26,7 @@ namespace POO.Jardines.Windows
             if (categoria != null)
             {
                 txtCategoria.Text = categoria.NombreCategoria;
-                txtDescripcion.Text = categoria.Descrpcion;
+                txtDescripcion.Text = categoria.Descripcion;
             }
         }
         public static implicit operator frmCategoriasAE(frmPaisAE v)
@@ -44,6 +44,7 @@ namespace POO.Jardines.Windows
                 }
                 
                 categoria.NombreCategoria = txtCategoria.Text;
+                categoria.Descripcion = txtDescripcion.Text;
 
                 DialogResult = DialogResult.OK;
             }
@@ -51,17 +52,28 @@ namespace POO.Jardines.Windows
         private bool ValidarDatos()
         {
             bool valido = true;
-            if (string.IsNullOrEmpty(txtCategoria.Text))
+            if (string.IsNullOrEmpty(txtCategoria.Text) )
             {
                 valido = false;
                 errorProvider1.SetError(txtCategoria, "Debe Ingreasar un pais!");
+                
 
+            }
+            if (string.IsNullOrEmpty(txtDescripcion.Text))
+            {
+                valido = false;
+                errorProvider1.SetError(txtDescripcion, "Debe Ingreasar Una Descripcion");
             }
             return valido;
         }
         public Categoria GetCategoria()
         {
             return categoria;
+        }
+
+        internal void SetCategoria(Categoria categoria)
+        {
+            throw new NotImplementedException();
         }
 
         //public void SetPais(Pais pais)

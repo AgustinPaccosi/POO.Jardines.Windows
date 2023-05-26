@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCategorias));
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvDatos = new System.Windows.Forms.DataGridView();
+            this.ColCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LblCantidad = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,8 +47,6 @@
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCerrar = new System.Windows.Forms.ToolStripButton();
-            this.ColCategoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).BeginInit();
             this.panel1.SuspendLayout();
@@ -81,6 +81,22 @@
             this.dgvDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDatos.Size = new System.Drawing.Size(800, 347);
             this.dgvDatos.TabIndex = 0;
+            // 
+            // ColCategoria
+            // 
+            this.ColCategoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColCategoria.HeaderText = "Categoria";
+            this.ColCategoria.MinimumWidth = 6;
+            this.ColCategoria.Name = "ColCategoria";
+            this.ColCategoria.ReadOnly = true;
+            // 
+            // ColDescripcion
+            // 
+            this.ColDescripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ColDescripcion.HeaderText = "Descripcion";
+            this.ColDescripcion.MinimumWidth = 6;
+            this.ColDescripcion.Name = "ColDescripcion";
+            this.ColDescripcion.ReadOnly = true;
             // 
             // panel1
             // 
@@ -148,6 +164,7 @@
             this.btnEditar.Size = new System.Drawing.Size(52, 44);
             this.btnEditar.Text = "Editar";
             this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnBorrar
             // 
@@ -210,22 +227,6 @@
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
-            // 
-            // ColCategoria
-            // 
-            this.ColCategoria.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColCategoria.HeaderText = "Categoria";
-            this.ColCategoria.MinimumWidth = 6;
-            this.ColCategoria.Name = "ColCategoria";
-            this.ColCategoria.ReadOnly = true;
-            // 
-            // ColDescripcion
-            // 
-            this.ColDescripcion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ColDescripcion.HeaderText = "Descripcion";
-            this.ColDescripcion.MinimumWidth = 6;
-            this.ColDescripcion.Name = "ColDescripcion";
-            this.ColDescripcion.ReadOnly = true;
             // 
             // frmCategorias
             // 

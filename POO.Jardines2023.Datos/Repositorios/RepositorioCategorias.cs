@@ -20,7 +20,24 @@ namespace POO.Jardines2023.Datos.Repositorios
         }
         public void Agregar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string InsertQuery = "INSERT INTO dbo.Categorias (NombreCategoria, Descripcion) VALUES (@NombreCategoria, @Descripcion); SELECT SCOPE_IDENTITY()";
+                using (var comando = new SqlCommand(InsertQuery, conn))
+                {
+                    comando.Parameters.Add("@NombreCategoria", SqlDbType.NVarChar);
+                    comando.Parameters["@NombreCategoria"].Value = categoria.NombreCategoria;
+                    comando.Parameters.Add("@Descripcion", SqlDbType.NVarChar);
+                    comando.Parameters["@Descripcion"].Value = categoria.Descripcion;
+
+
+                    //ciudad.CiudadId = (int)comando.ExecuteScalar();
+                    int Id = Convert.ToInt32(comando.ExecuteScalar());
+                    categoria.CategoriaId = Id;
+                }
+            }
+
         }
 
         public void Borrar(int CategoriaId)
@@ -54,12 +71,46 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         public bool Existe(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var cantidad = 0;
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string SelectQuery;
+                    SelectQuery = "SELECT COUNT(*) FROM dbo.Categorias WHERE NombreCategoria=@NombreCategoria";
+                    using (var comando = new SqlCommand(SelectQuery, conn))
+                    {
+                        comando.Parameters.Add("@NombreCategoria", SqlDbType.NVarChar);
+                        comando.Parameters["@NombreCategoria"].Value = categoria.NombreCategoria;
+
+                        cantidad = (int)comando.ExecuteScalar();
+                    }
+                }
+                return cantidad > 0;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public int GetCantidad()
         {
-            throw new NotImplementedException();
+            int cantidad = 0;
+            using (var conn=new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string CountQuery = "Select Count(*) FROM dbo.Categorias";
+                using (var comando = new SqlCommand(CountQuery, conn))
+                {
+                    cantidad = (int)comando.ExecuteScalar();
+                }
+
+            }
+            return cantidad;
         }
 
         public List<Categoria> GetCategorias()
@@ -81,7 +132,7 @@ namespace POO.Jardines2023.Datos.Repositorios
                                 {
                                     CategoriaId = reader.GetInt32(0),
                                     NombreCategoria = reader.GetString(1),
-                                    Descrpcion = reader.GetString(2)
+                                    Descripcion = reader.GetString(2)
                                 };
                                 listacat.Add(categoria);
                             }

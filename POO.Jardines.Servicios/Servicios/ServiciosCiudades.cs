@@ -76,6 +76,20 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
+
+        public int GetCantidadFiltrada(Pais pais)
+        {
+            try
+            {
+                return _repositorioCiudades.GetCantidadFiltrada(pais);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Ciudad> GetCiudades()
         {
             try

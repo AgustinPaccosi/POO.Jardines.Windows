@@ -15,6 +15,7 @@ namespace POO.Jardines2023.Datos.Interfaces
         bool Existe(Ciudad ciudad);
         List<Ciudad> Filtrar(Pais pais);
         int GetCantidad();
+        int GetCantidadFiltrada(Pais pais);
         List<Ciudad> GetCiudades();
     }
 }

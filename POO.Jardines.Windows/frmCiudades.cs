@@ -167,6 +167,7 @@ namespace POO.Jardines.Windows
             {
                 var pais = frm.GetPais();
                 listaCiudad = _servicios.Filtrar(pais);
+                LblCantidad.Text = _servicios.GetCantidadFiltrada(pais).ToString();
                 btnBuscar.BackColor = Color.Orange;
                 MostrarDatosEnGrilla();
             }

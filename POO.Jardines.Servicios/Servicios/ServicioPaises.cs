@@ -98,6 +98,19 @@ namespace POO.Jardines.Servicios.Servicios
             }
         }
 
+        public List<Pais> Filtrar(Pais pais)
+        {
+            try
+            {
+                return _repositorio.FiltrarPais(pais);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         //public List<Pais> Filtrar(Pais pais)
         //{
         //    try

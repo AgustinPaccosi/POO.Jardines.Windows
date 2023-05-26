@@ -33,12 +33,28 @@ namespace POO.Jardines.Servicios.Servicios
 
         public bool Existe(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _repositorioCategorias.Existe(categoria);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public int GetCantidad()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _repositorioCategorias.GetCantidad();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<Categoria> GetCategorias()
@@ -57,7 +73,23 @@ namespace POO.Jardines.Servicios.Servicios
 
         public void Guardar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (categoria.CategoriaId == 0)
+                {
+                    _repositorioCategorias.Agregar(categoria);
+                }
+                else
+                {
+                    _repositorioCategorias.Editar(categoria);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

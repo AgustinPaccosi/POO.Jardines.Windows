@@ -13,7 +13,8 @@ namespace POO.Jardines.Servicios.Interfaces
         void Borrar(int ciudadId);
         bool Existe(Ciudad ciudad);
         int GetCantidad();
-        List<Ciudad> GetCiudades();
         List<Ciudad> Filtrar(Pais pais);
+        int GetCantidadFiltrada(Pais pais);
+        List<Ciudad> GetCiudades();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using POO.Jardines.Servicios.Interfaces;
 using POO.Jardines.Servicios.Servicios;
+using POO.Jardines.Windows.Helpers;
 using POO.Jardines2023.Entidades.Entidades;
 using System;
 using System.Collections.Generic;
@@ -27,8 +28,7 @@ namespace POO.Jardines.Windows
         {
             try
             {
-                listaCategorias = _serviciosCategorias.GetCategorias();
-                MostrarDatosEnGrilla();
+                RecargarGrilla();
             }
             catch (Exception)
             {
@@ -36,39 +36,29 @@ namespace POO.Jardines.Windows
                 throw;
             }
         }
+
+        private void RecargarGrilla()
+        {
+            listaCategorias = _serviciosCategorias.GetCategorias();
+            MostrarDatosEnGrilla();
+            MostrarCantidad();
+        }
+
         private void MostrarCantidad()
         {
-            //LblCantidad.Text = _servicioCategorias.GetCantidad().ToString();
+            LblCantidad.Text = _serviciosCategorias.GetCantidad().ToString();
         }
 
         private void MostrarDatosEnGrilla()
         {
-            dgvDatos.Rows.Clear();
+            GridHelper.LimpiarGrilla(dgvDatos);
             foreach (var categoria in listaCategorias)
             {
-                DataGridViewRow r = ConstruirFila();
-                SetearFila(r, categoria);
-                AgregarFila(r);
+                DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
+                GridHelper.SetearFila(r, categoria);
+                GridHelper.AgregarFila(dgvDatos, r);
             }
         }
-        private void AgregarFila(DataGridViewRow r)
-        {
-            dgvDatos.Rows.Add(r);
-        }
-        private void SetearFila(DataGridViewRow r, Categoria categoria)
-        {
-            r.Cells[ColDescripcion.Index].Value = categoria.Descrpcion;
-            r.Cells[ColCategoria.Index].Value = categoria.NombreCategoria;
-
-            r.Tag = categoria;
-        }
-        private DataGridViewRow ConstruirFila()
-        {
-            DataGridViewRow r = new DataGridViewRow();
-            r.CreateCells(dgvDatos);
-            return r;
-        }
-
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Close();
@@ -93,7 +83,8 @@ namespace POO.Jardines.Windows
                 }
                 //Control de Relaciones;
                 _serviciosCategorias.Borrar(categoria.CategoriaId);
-                Quitarfila(r);
+                MostrarCantidad();
+                GridHelper.Quitarfila(dgvDatos, r);
                 MessageBox.Show("Registro Borrado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -103,26 +94,21 @@ namespace POO.Jardines.Windows
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void Quitarfila(DataGridViewRow r)
-        {
-            dgvDatos.Rows.Remove(r);
-        }
-
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmCategorias frm = new frmCategorias() { Text = "Agregar Pais" };
+            frmCategoriasAE frm = new frmCategoriasAE() { Text = "Agregar Pais" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel) { return; }
             try
             {
-                var categoria = frm.GetCategoria();
+                Categoria categoria = frm.GetCategoria();
                 if (!_serviciosCategorias.Existe(categoria))
                 {
                     _serviciosCategorias.Guardar(categoria);
-                    DataGridViewRow r = ConstruirFila();
-                    SetearFila(r, categoria);
-                    AgregarFila(r);
+                    DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
+                    GridHelper.SetearFila(r, categoria);
+                    GridHelper.AgregarFila(dgvDatos, r);
+
                     MostrarCantidad();
                     MessageBox.Show("Registro Agregado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -141,9 +127,47 @@ namespace POO.Jardines.Windows
             }
         }
 
-        private Categoria GetCategoria()
+        private void btnEditar_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            Categoria categoria = (Categoria)r.Tag;
+            Categoria categoriacopia = (Categoria)categoria.Clone();
+            try
+            {
+                frmCategoriasAE frm = new frmCategoriasAE() { Text = "Editar Categoria" };
+                frm.SetCategoria(categoria);
+
+                DialogResult dr = frm.ShowDialog(this);
+                if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+                categoria = frm.GetCategoria();
+                if (!_serviciosCategorias.Existe(categoria))
+                {
+                    _serviciosCategorias.Guardar(categoria);
+                    GridHelper.SetearFila(r, categoria);
+                    MessageBox.Show("El registro se edito Correctamente",
+                        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    GridHelper.SetearFila(r, categoriacopia);
+                    MessageBox.Show("Registro Duplicado", "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                GridHelper.SetearFila(r, categoriacopia);
+                MessageBox.Show(ex.Message, "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
     }
 }

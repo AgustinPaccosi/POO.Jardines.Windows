@@ -30,8 +30,7 @@ namespace POO.Jardines.Windows
         {
             try
             {
-                listapaises=_servicios.GetPaises();
-                MostrarDatosEnGrilla();
+                RecargarGrilla();
                 MostrarCantidad();
             }
             catch (Exception)
@@ -40,6 +39,8 @@ namespace POO.Jardines.Windows
                 throw;
             }
         }
+
+
         private void MostrarCantidad()
         {
             LblCantidad.Text = _servicios.GetCantidad().ToString();
@@ -120,6 +121,7 @@ namespace POO.Jardines.Windows
                 }
                 //Control de Relaciones;
                 _servicios.Borrar(pais.PaisId);
+                MostrarCantidad();
                 GridHelper.Quitarfila(dgvDatos, r);
                 MessageBox.Show("Registro Borrado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -174,23 +176,38 @@ namespace POO.Jardines.Windows
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            //frmPaisesSeleccionar frm = new frmPaisesSeleccionar() { Text = "Seleccionar Pais" };
-            //DialogResult dr = frm.ShowDialog(this);
-            //if (dr == DialogResult.Cancel)
-            //{
-            //    return;
-            //}
-            //try
-            //{
-            //    var pais = frm.GetPais();
-            //    listapaises = _servicios.Filtrar(pais);
-            //}
-            //catch (Exception)
-            //{
+            frmPaisesSeleccionar frm = new frmPaisesSeleccionar() { Text = "Seleccionar Pais" };
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
+            try
+            {
+                var pais = frm.GetPais();
+                listapaises = _servicios.Filtrar(pais);
+                btnBuscar.BackColor = Color.Orange;
+                MostrarDatosEnGrilla();
 
-            //    throw;
-            //}
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            RecargarGrilla();
+            btnBuscar.BackColor = Color.White;
+        }
+        private void RecargarGrilla()
+        {
+            listapaises = _servicios.GetPaises();
+            MostrarDatosEnGrilla();
+        }
+
     }
 }
