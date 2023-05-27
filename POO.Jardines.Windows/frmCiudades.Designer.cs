@@ -34,8 +34,16 @@
             this.ColPais = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColCiudad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnFin = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnPrincipio = new System.Windows.Forms.Button();
+            this.lblPaginas2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblPaginas1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.LblCantidad = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnNuevo = new System.Windows.Forms.ToolStripButton();
             this.btnEditar = new System.Windows.Forms.ToolStripButton();
@@ -100,31 +108,115 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnFin);
+            this.panel1.Controls.Add(this.btnSiguiente);
+            this.panel1.Controls.Add(this.btnAnterior);
+            this.panel1.Controls.Add(this.btnPrincipio);
+            this.panel1.Controls.Add(this.lblPaginas2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.lblPaginas1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.LblCantidad);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 394);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 56);
             this.panel1.TabIndex = 7;
             // 
+            // btnFin
+            // 
+            this.btnFin.Location = new System.Drawing.Point(467, 6);
+            this.btnFin.Name = "btnFin";
+            this.btnFin.Size = new System.Drawing.Size(75, 36);
+            this.btnFin.TabIndex = 13;
+            this.btnFin.Text = "Fin";
+            this.btnFin.UseVisualStyleBackColor = true;
+            this.btnFin.Click += new System.EventHandler(this.btnFin_Click);
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(386, 6);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 36);
+            this.btnSiguiente.TabIndex = 14;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // btnAnterior
+            // 
+            this.btnAnterior.Location = new System.Drawing.Point(305, 6);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(75, 36);
+            this.btnAnterior.TabIndex = 15;
+            this.btnAnterior.Text = "Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
+            // 
+            // btnPrincipio
+            // 
+            this.btnPrincipio.Location = new System.Drawing.Point(224, 6);
+            this.btnPrincipio.Name = "btnPrincipio";
+            this.btnPrincipio.Size = new System.Drawing.Size(75, 36);
+            this.btnPrincipio.TabIndex = 16;
+            this.btnPrincipio.Text = "Principio";
+            this.btnPrincipio.UseVisualStyleBackColor = true;
+            this.btnPrincipio.Click += new System.EventHandler(this.btnPrincipio_Click);
+            // 
+            // lblPaginas2
+            // 
+            this.lblPaginas2.AutoSize = true;
+            this.lblPaginas2.Location = new System.Drawing.Point(162, 27);
+            this.lblPaginas2.Name = "lblPaginas2";
+            this.lblPaginas2.Size = new System.Drawing.Size(14, 16);
+            this.lblPaginas2.TabIndex = 12;
+            this.lblPaginas2.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(133, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(23, 16);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "de";
+            // 
+            // lblPaginas1
+            // 
+            this.lblPaginas1.AutoSize = true;
+            this.lblPaginas1.Location = new System.Drawing.Point(113, 27);
+            this.lblPaginas1.Name = "lblPaginas1";
+            this.lblPaginas1.Size = new System.Drawing.Size(14, 16);
+            this.lblPaginas1.TabIndex = 10;
+            this.lblPaginas1.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(33, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Paginas:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(30, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(125, 16);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Cantidad Registros:";
+            // 
             // LblCantidad
             // 
             this.LblCantidad.AutoSize = true;
-            this.LblCantidad.Location = new System.Drawing.Point(193, 7);
+            this.LblCantidad.Location = new System.Drawing.Point(162, 6);
             this.LblCantidad.Name = "LblCantidad";
             this.LblCantidad.Size = new System.Drawing.Size(14, 16);
             this.LblCantidad.TabIndex = 1;
             this.LblCantidad.Text = "0";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(61, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Cantidad Registros:";
             // 
             // toolStrip1
             // 
@@ -257,8 +349,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dgvDatos;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label LblCantidad;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnNuevo;
         private System.Windows.Forms.ToolStripButton btnEditar;
@@ -272,5 +362,15 @@
         private System.Windows.Forms.ToolStripButton btnCerrar;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPais;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCiudad;
+        private System.Windows.Forms.Label LblCantidad;
+        private System.Windows.Forms.Button btnFin;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnPrincipio;
+        private System.Windows.Forms.Label lblPaginas2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPaginas1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label5;
     }
 }

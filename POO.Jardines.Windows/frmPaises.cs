@@ -22,6 +22,12 @@ namespace POO.Jardines.Windows
         }
         private readonly ServicioPaises _servicios;
         private List<Pais> listapaises;
+
+        //Para PAGINACION
+        int paginaActual = 1;
+        int registros = 0;
+        int paginasTotales = 0;
+        int registrosPorPagina = 5;
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Close();
@@ -30,20 +36,16 @@ namespace POO.Jardines.Windows
         {
             try
             {
+                registros = _servicios.GetCantidad();
+                paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina );
                 RecargarGrilla();
-                MostrarCantidad();
+                //listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+
             }
             catch (Exception)
             {
-
                 throw;
             }
-        }
-
-
-        private void MostrarCantidad()
-        {
-            LblCantidad.Text = _servicios.GetCantidad().ToString();
         }
         private void MostrarDatosEnGrilla()
         {
@@ -54,23 +56,9 @@ namespace POO.Jardines.Windows
                 GridHelper.SetearFila(r, pais);
                 GridHelper.AgregarFila(dgvDatos,r);
             }
+            LblCantidad.Text = _servicios.GetCantidad().ToString(); lblPaginas1.Text=paginaActual.ToString();
+            lblPaginas2.Text=paginasTotales.ToString();
         }
-        //private void AgregarFila(DataGridViewRow r)
-        //{
-        //    dgvDatos.Rows.Add(r);
-        //}
-        //private void SetearFila(DataGridViewRow r, Pais pais)
-        //{
-        //    r.Cells[ColPais.Index].Value= pais.NombrePais;
-
-        //    r.Tag = pais;
-        //}
-        //private DataGridViewRow ConstruirFila()
-        //{
-        //    DataGridViewRow r = new DataGridViewRow();
-        //    r.CreateCells(dgvDatos);
-        //    return r;
-        //}
         private void btnNuevo_Click(object sender, EventArgs e)
         {
             frmPaisAE frm=new frmPaisAE() {Text="Agregar Pais" };
@@ -85,7 +73,7 @@ namespace POO.Jardines.Windows
                     DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
                     GridHelper.SetearFila(r, pais);
                     GridHelper.AgregarFila(dgvDatos, r);
-                    MostrarCantidad();
+                    RecargarGrilla();
                     MessageBox.Show("Registro Agregado", "Mensaje",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -121,8 +109,8 @@ namespace POO.Jardines.Windows
                 }
                 //Control de Relaciones;
                 _servicios.Borrar(pais.PaisId);
-                MostrarCantidad();
                 GridHelper.Quitarfila(dgvDatos, r);
+                RecargarGrilla();
                 MessageBox.Show("Registro Borrado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -192,12 +180,10 @@ namespace POO.Jardines.Windows
             }
             catch (Exception)
             {
-
                 throw;
             }
 
         }
-
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             RecargarGrilla();
@@ -205,9 +191,46 @@ namespace POO.Jardines.Windows
         }
         private void RecargarGrilla()
         {
-            listapaises = _servicios.GetPaises();
+            //listapaises = _servicios.GetPaises();
+            listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual);
             MostrarDatosEnGrilla();
         }
+        private void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            if (paginaActual==paginasTotales)
+            {
+                return;
+            }
+            paginaActual++;
+            MostratPaginado();
+        }
 
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual == 1)
+            {
+                return;
+            }
+            paginaActual--;
+            MostratPaginado(); 
+        }
+
+        private void btnFin_Click(object sender, EventArgs e)
+        {
+            paginaActual = paginasTotales;
+            MostratPaginado();
+        }
+
+
+        private void btnPrincipio_Click(object sender, EventArgs e)
+        {
+            paginaActual = 1;
+            MostratPaginado();
+        }
+        private void MostratPaginado()
+        {
+            listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+            RecargarGrilla();
+        }
     }
 }

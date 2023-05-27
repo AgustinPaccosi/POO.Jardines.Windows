@@ -17,5 +17,6 @@ namespace POO.Jardines2023.Datos.Interfaces
         int GetCantidad();
         int GetCantidadFiltrada(Pais pais);
         List<Ciudad> GetCiudades();
+        List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual);
     }
 }

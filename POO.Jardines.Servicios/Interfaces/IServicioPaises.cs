@@ -9,6 +9,8 @@ namespace POO.Jardines.Servicios.Interfaces
         bool Existe(Pais pais);
         int GetCantidad();
         List<Pais> GetPaises();
+        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual);
+
         void Guardar(Pais pais);
         Pais GetPaisPorId(int paisId);
     }

@@ -108,6 +108,25 @@ namespace POO.Jardines.Servicios.Servicios
             }
         }
 
+        public List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual)
+        {
+            try
+            {
+                var lista =_repositorioCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+                foreach (var item in lista)
+                {
+                    item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
+                }
+                return lista;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public void Guardar(Ciudad ciudad)
         {
             try

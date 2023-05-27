@@ -129,44 +129,44 @@ namespace POO.Jardines.Windows
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (dgvDatos.SelectedRows.Count == 0)
-            {
-                return;
-            }
-            var r = dgvDatos.SelectedRows[0];
-            Categoria categoria = (Categoria)r.Tag;
-            Categoria categoriacopia = (Categoria)categoria.Clone();
-            try
-            {
-                frmCategoriasAE frm = new frmCategoriasAE() { Text = "Editar Categoria" };
-                frm.SetCategoria(categoria);
+            //if (dgvDatos.SelectedRows.Count == 0)
+            //{
+            //    return;
+            //}
+            //var r = dgvDatos.SelectedRows[0];
+            //Categoria categoria = (Categoria)r.Tag;
+            //Categoria categoriacopia = (Categoria)categoria.Clone();
+            //try
+            //{
+            //    frmCategoriasAE frm = new frmCategoriasAE() { Text = "Editar Categoria" };
+            //    frm.SetCategoria(categoria);
 
-                DialogResult dr = frm.ShowDialog(this);
-                if (dr == DialogResult.Cancel)
-                {
-                    return;
-                }
-                categoria = frm.GetCategoria();
-                if (!_serviciosCategorias.Existe(categoria))
-                {
-                    _serviciosCategorias.Guardar(categoria);
-                    GridHelper.SetearFila(r, categoria);
-                    MessageBox.Show("El registro se edito Correctamente",
-                        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    GridHelper.SetearFila(r, categoriacopia);
-                    MessageBox.Show("Registro Duplicado", "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                GridHelper.SetearFila(r, categoriacopia);
-                MessageBox.Show(ex.Message, "ERROR",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    DialogResult dr = frm.ShowDialog(this);
+            //    if (dr == DialogResult.Cancel)
+            //    {
+            //        return;
+            //    }
+            //    categoria = frm.GetCategoria();
+            //    if (!_serviciosCategorias.Existe(categoria))
+            //    {
+            //        _serviciosCategorias.Guardar(categoria);
+            //        GridHelper.SetearFila(r, categoria);
+            //        MessageBox.Show("El registro se edito Correctamente",
+            //            "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    }
+            //    else
+            //    {
+            //        GridHelper.SetearFila(r, categoriacopia);
+            //        MessageBox.Show("Registro Duplicado", "Mensaje",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    GridHelper.SetearFila(r, categoriacopia);
+            //    MessageBox.Show(ex.Message, "ERROR",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
         }
     }

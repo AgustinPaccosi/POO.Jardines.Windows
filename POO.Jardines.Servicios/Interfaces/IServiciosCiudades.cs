@@ -16,5 +16,6 @@ namespace POO.Jardines.Servicios.Interfaces
         List<Ciudad> Filtrar(Pais pais);
         int GetCantidadFiltrada(Pais pais);
         List<Ciudad> GetCiudades();
+        List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual);
     }
 }

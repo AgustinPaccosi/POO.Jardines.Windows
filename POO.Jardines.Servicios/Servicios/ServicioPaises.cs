@@ -111,6 +111,19 @@ namespace POO.Jardines.Servicios.Servicios
             }
         }
 
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        {
+            try
+            {
+                return _repositorio.GetPaisesPorPagina(cantidad, paginaActual);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         //public List<Pais> Filtrar(Pais pais)
         //{
         //    try

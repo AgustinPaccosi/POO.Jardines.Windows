@@ -3,49 +3,63 @@ using POO.Jardines.Servicios.Servicios;
 using POO.Jardines.Windows.Helpers;
 using POO.Jardines2023.Entidades.Entidades;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace POO.Jardines.Windows
 {
     public partial class frmCiudades : Form
     {
-        private readonly IServiciosCiudades _servicios;
+        private readonly IServiciosCiudades _serviciosCiudades;
         private List<Ciudad> listaCiudad;
+        //Para PAGINACION
+        int paginaActual = 1;
+        int registros = 0;
+        int paginasTotales = 0;
+        int registrosPorPagina = 10;
 
         public frmCiudades()
         {
             InitializeComponent();
-            _servicios= new ServiciosCiudades();
+            _serviciosCiudades= new ServiciosCiudades();
         }
         private void frmCiudades_Load(object sender, EventArgs e)
         {
             RecargarGrilla();
-            //try
-            //{
-            //    listaCiudad=_servicios.GetCiudades();
-            //    MostrarDatosEnGrilla();
-            //    MostrarCantidad();
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
         }
-        private void MostrarCantidad()
+        private void RecargarGrilla()
         {
-            LblCantidad.Text = _servicios.GetCantidad().ToString();
+            try
+            {
+                registros = _serviciosCiudades.GetCantidad();
+                paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
+                listaCiudad = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+                MostrarDatosEnGrilla();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
         private void MostrarDatosEnGrilla()
         {
             GridHelper.LimpiarGrilla(dgvDatos);
+            //List<Ciudad> ciudadesOrdenadas = listaCiudad.OrderBy(ciudad => ciudad.Pais.NombrePais).ToList();
+
             foreach (var ciudad in listaCiudad)
             {
                 DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
                 GridHelper.SetearFila(r, ciudad);
                 GridHelper.AgregarFila(dgvDatos, r);
             }
+            LblCantidad.Text = _serviciosCiudades.GetCantidad().ToString();
+            lblPaginas1.Text = paginaActual.ToString();
+            lblPaginas2.Text = paginasTotales.ToString();
+
         }
         private void btnCerrar_Click(object sender, EventArgs e)
         {
@@ -53,7 +67,7 @@ namespace POO.Jardines.Windows
         }
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmCiudadesAE frm=new frmCiudadesAE() {Text= "Agregar Ciudad" };
+            frmCiudadesAE frm=new frmCiudadesAE(_serviciosCiudades) {Text= "Agregar Ciudad" };
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel)
             {
@@ -62,15 +76,16 @@ namespace POO.Jardines.Windows
             try
             {
                 Ciudad ciudad = frm.GetCiudad();
-                if (!_servicios.Existe(ciudad))
+                if (!_serviciosCiudades.Existe(ciudad))
                 {
-                    _servicios.Guardar(ciudad);
+                    _serviciosCiudades.Guardar(ciudad);
                     var r = GridHelper.ConstruirFila(dgvDatos);
                     GridHelper.SetearFila(r, ciudad);
                     GridHelper.AgregarFila(dgvDatos, r);
+                    RecargarGrilla();
 
-                    MessageBox.Show("Registro Agregardo", "Mensaje", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    //MessageBox.Show("Registro Agregardo", "Mensaje", MessageBoxButtons.OK,
+                    //    MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -96,28 +111,31 @@ namespace POO.Jardines.Windows
             Ciudad ciudadcopia = (Ciudad)ciudad.Clone();
             try
             {
-                frmCiudadesAE frm = new frmCiudadesAE() { Text = "Editar Ciudad" };
+                frmCiudadesAE frm = new frmCiudadesAE(_serviciosCiudades) { Text = "Editar Ciudad" };
                 frm.SetCiudad(ciudad);
 
                 DialogResult dr = frm.ShowDialog(this);
                 if (dr == DialogResult.Cancel)
                 {
+                    RecargarGrilla();
                     return;
                 }
                 ciudad = frm.GetCiudad();
-                if (!_servicios.Existe(ciudad))
-                {
-                    _servicios.Guardar(ciudad);
-                    GridHelper.SetearFila(r, ciudad);
-                    MessageBox.Show("El registro se edito Correctamente",
-                        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    GridHelper.SetearFila(r, ciudadcopia);
-                    MessageBox.Show("Registro Duplicado", "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                GridHelper.SetearFila(r, ciudad);
+                RecargarGrilla();
+                //if (!_serviciosCiudades.Existe(ciudad))
+                //{
+                //    _serviciosCiudades.Guardar(ciudad);
+                //    GridHelper.SetearFila(r, ciudad);
+                //    MessageBox.Show("El registro se edito Correctamente",
+                //        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                //else
+                //{
+                //    GridHelper.SetearFila(r, ciudadcopia);
+                //    MessageBox.Show("Registro Duplicado", "Mensaje",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
             }
             catch (Exception ex)
             {
@@ -143,8 +161,9 @@ namespace POO.Jardines.Windows
                 {
                     return;
                 }
-                _servicios.Borrar(ciudad.CiudadId);
+                _serviciosCiudades.Borrar(ciudad.CiudadId);
                 GridHelper.Quitarfila(dgvDatos, r);
+                RecargarGrilla();
                 MessageBox.Show("Registro Borrado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -166,8 +185,8 @@ namespace POO.Jardines.Windows
             try
             {
                 var pais = frm.GetPais();
-                listaCiudad = _servicios.Filtrar(pais);
-                LblCantidad.Text = _servicios.GetCantidadFiltrada(pais).ToString();
+                listaCiudad = _serviciosCiudades.Filtrar(pais);
+                LblCantidad.Text = _serviciosCiudades.GetCantidadFiltrada(pais).ToString();
                 btnBuscar.BackColor = Color.Orange;
                 MostrarDatosEnGrilla();
             }
@@ -185,18 +204,41 @@ namespace POO.Jardines.Windows
 
         }
 
-        private void RecargarGrilla()
+        private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            try
+            if (paginaActual == paginasTotales)
             {
-                listaCiudad = _servicios.GetCiudades();
-                MostrarDatosEnGrilla();
-                MostrarCantidad();
+                return;
             }
-            catch (Exception)
+            paginaActual++;
+            MostrarPaginado();
+        }
+
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
+            if (paginaActual == 1)
             {
-                throw;
+                return;
             }
+            paginaActual--;
+            MostrarPaginado();
+        }
+
+        private void btnFin_Click(object sender, EventArgs e)
+        {
+            paginaActual = paginasTotales;
+            MostrarPaginado();
+        }
+        private void btnPrincipio_Click(object sender, EventArgs e)
+        {
+            paginaActual = 1;
+            MostrarPaginado();
+        }
+
+        private void MostrarPaginado()
+        {
+            listaCiudad = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
+            RecargarGrilla();
         }
     }
 }

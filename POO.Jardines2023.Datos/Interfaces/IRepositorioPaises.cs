@@ -13,6 +13,7 @@ namespace POO.Jardines2023.Datos.Interfaces
         List<Pais> GetPaises();
         Pais GetPaisPorId(int paisId);
         List<Pais> FiltrarPais(Pais pais);
+        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual);
 
     }
 }

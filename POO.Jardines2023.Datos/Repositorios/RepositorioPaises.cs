@@ -246,9 +246,40 @@ namespace POO.Jardines2023.Datos.Repositorios
             return listaPais;
         }
 
-        //public List<Pais> Filtrar(Pais pais)
-        //{
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        {
+            try
+            {
+                List<Pais> listaPais = new List<Pais>();
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises ORDER BY NombrePais OFFSET @cantidadRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+                    using (var comando = new SqlCommand(SelectQuery, conn))
+                    {
+                        comando.Parameters.Add("@cantidadRegistros", SqlDbType.Int);
+                        comando.Parameters["@cantidadRegistros"].Value=cantidad*(paginaActual-1);
 
-        //}
+                        comando.Parameters.Add("@cantidadPorPagina", SqlDbType.Int);
+                        comando.Parameters["@cantidadPorPagina"].Value= cantidad;
+                        using (var reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var paiss = ConstruirPais(reader);
+                                listaPais.Add(paiss);
+                            }
+                        }
+                    }
+                }
+                return listaPais;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

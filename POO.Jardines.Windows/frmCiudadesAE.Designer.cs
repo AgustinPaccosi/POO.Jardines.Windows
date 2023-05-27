@@ -36,6 +36,7 @@
             this.cboPaises = new System.Windows.Forms.ComboBox();
             this.txtCiudades = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnAgregarPais = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -96,11 +97,22 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnAgregarPais
+            // 
+            this.btnAgregarPais.Location = new System.Drawing.Point(506, 47);
+            this.btnAgregarPais.Name = "btnAgregarPais";
+            this.btnAgregarPais.Size = new System.Drawing.Size(108, 26);
+            this.btnAgregarPais.TabIndex = 4;
+            this.btnAgregarPais.Text = "Agregar Pais";
+            this.btnAgregarPais.UseVisualStyleBackColor = true;
+            this.btnAgregarPais.Click += new System.EventHandler(this.btnAgregarPais_Click);
+            // 
             // frmCiudadesAE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 395);
+            this.Controls.Add(this.btnAgregarPais);
             this.Controls.Add(this.txtCiudades);
             this.Controls.Add(this.cboPaises);
             this.Controls.Add(this.btnOk);
@@ -124,5 +136,6 @@
         private System.Windows.Forms.ComboBox cboPaises;
         private System.Windows.Forms.TextBox txtCiudades;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnAgregarPais;
     }
 }

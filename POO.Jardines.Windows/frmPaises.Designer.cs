@@ -33,6 +33,14 @@
             this.dgvDatos = new System.Windows.Forms.DataGridView();
             this.ColPais = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnFin = new System.Windows.Forms.Button();
+            this.btnSiguiente = new System.Windows.Forms.Button();
+            this.btnAnterior = new System.Windows.Forms.Button();
+            this.btnPrincipio = new System.Windows.Forms.Button();
+            this.lblPaginas2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblPaginas1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.LblCantidad = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -90,6 +98,14 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnFin);
+            this.panel1.Controls.Add(this.btnSiguiente);
+            this.panel1.Controls.Add(this.btnAnterior);
+            this.panel1.Controls.Add(this.btnPrincipio);
+            this.panel1.Controls.Add(this.lblPaginas2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.lblPaginas1);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.LblCantidad);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -97,6 +113,82 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 56);
             this.panel1.TabIndex = 4;
+            // 
+            // btnFin
+            // 
+            this.btnFin.Location = new System.Drawing.Point(498, 6);
+            this.btnFin.Name = "btnFin";
+            this.btnFin.Size = new System.Drawing.Size(75, 36);
+            this.btnFin.TabIndex = 6;
+            this.btnFin.Text = "Fin";
+            this.btnFin.UseVisualStyleBackColor = true;
+            this.btnFin.Click += new System.EventHandler(this.btnFin_Click);
+            // 
+            // btnSiguiente
+            // 
+            this.btnSiguiente.Location = new System.Drawing.Point(417, 6);
+            this.btnSiguiente.Name = "btnSiguiente";
+            this.btnSiguiente.Size = new System.Drawing.Size(75, 36);
+            this.btnSiguiente.TabIndex = 6;
+            this.btnSiguiente.Text = "Siguiente";
+            this.btnSiguiente.UseVisualStyleBackColor = true;
+            this.btnSiguiente.Click += new System.EventHandler(this.btnSiguiente_Click);
+            // 
+            // btnAnterior
+            // 
+            this.btnAnterior.Location = new System.Drawing.Point(336, 6);
+            this.btnAnterior.Name = "btnAnterior";
+            this.btnAnterior.Size = new System.Drawing.Size(75, 36);
+            this.btnAnterior.TabIndex = 6;
+            this.btnAnterior.Text = "Anterior";
+            this.btnAnterior.UseVisualStyleBackColor = true;
+            this.btnAnterior.Click += new System.EventHandler(this.btnAnterior_Click);
+            // 
+            // btnPrincipio
+            // 
+            this.btnPrincipio.Location = new System.Drawing.Point(255, 6);
+            this.btnPrincipio.Name = "btnPrincipio";
+            this.btnPrincipio.Size = new System.Drawing.Size(75, 36);
+            this.btnPrincipio.TabIndex = 6;
+            this.btnPrincipio.Text = "Principio";
+            this.btnPrincipio.UseVisualStyleBackColor = true;
+            this.btnPrincipio.Click += new System.EventHandler(this.btnPrincipio_Click);
+            // 
+            // lblPaginas2
+            // 
+            this.lblPaginas2.AutoSize = true;
+            this.lblPaginas2.Location = new System.Drawing.Point(193, 27);
+            this.lblPaginas2.Name = "lblPaginas2";
+            this.lblPaginas2.Size = new System.Drawing.Size(14, 16);
+            this.lblPaginas2.TabIndex = 5;
+            this.lblPaginas2.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(164, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(23, 16);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "de";
+            // 
+            // lblPaginas1
+            // 
+            this.lblPaginas1.AutoSize = true;
+            this.lblPaginas1.Location = new System.Drawing.Point(144, 27);
+            this.lblPaginas1.Name = "lblPaginas1";
+            this.lblPaginas1.Size = new System.Drawing.Size(14, 16);
+            this.lblPaginas1.TabIndex = 3;
+            this.lblPaginas1.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(64, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 16);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Paginas:";
             // 
             // LblCantidad
             // 
@@ -261,5 +353,13 @@
         private System.Windows.Forms.Label LblCantidad;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPais;
+        private System.Windows.Forms.Button btnFin;
+        private System.Windows.Forms.Button btnSiguiente;
+        private System.Windows.Forms.Button btnAnterior;
+        private System.Windows.Forms.Button btnPrincipio;
+        private System.Windows.Forms.Label lblPaginas2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblPaginas1;
+        private System.Windows.Forms.Label label2;
     }
 }
