@@ -253,5 +253,37 @@ namespace POO.Jardines2023.Datos.Repositorios
             }
 
         }
+
+        public Ciudad CiudadPorId(int ciudadId)
+        {
+            Ciudad ciudad = null;
+            try
+            {
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string SelectQuery = "SELECT CiudadId, NombreCiudad, PaisId FROM dbo.Ciudades WHERE CiudadId=@CiudadId";
+                    using (var cmd = new SqlCommand(SelectQuery, conn))
+                    {
+                        cmd.Parameters.Add("@CiudadId", SqlDbType.NVarChar);
+                        cmd.Parameters["@CiudadId"].Value = ciudadId;
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                ciudad = ConstruirCiudad(reader);
+                            }
+                        }
+                    }
+                }
+                return ciudad;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
 }

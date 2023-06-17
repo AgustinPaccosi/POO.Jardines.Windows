@@ -11,6 +11,7 @@ namespace POO.Jardines2023.Datos.Interfaces
     {
         void Agregar(Ciudad ciudad);
         void Borrar(int CiudadId);
+        Ciudad CiudadPorId(int ciudadId);
         void Editar(Ciudad ciudad);
         bool Existe(Ciudad ciudad);
         List<Ciudad> Filtrar(Pais pais);

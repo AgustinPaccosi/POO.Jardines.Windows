@@ -32,6 +32,7 @@
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnCiudades = new System.Windows.Forms.Button();
             this.btnCategorias = new System.Windows.Forms.Button();
+            this.btnClientes = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnPaises
@@ -74,16 +75,30 @@
             this.btnCategorias.UseVisualStyleBackColor = true;
             this.btnCategorias.Click += new System.EventHandler(this.btnCategorias_Click);
             // 
+            // btnClientes
+            // 
+            this.btnClientes.Location = new System.Drawing.Point(93, 208);
+            this.btnClientes.Name = "btnClientes";
+            this.btnClientes.Size = new System.Drawing.Size(107, 91);
+            this.btnClientes.TabIndex = 3;
+            this.btnClientes.Text = "Clientes";
+            this.btnClientes.UseVisualStyleBackColor = true;
+            this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(882, 453);
+            this.Controls.Add(this.btnClientes);
             this.Controls.Add(this.btnCategorias);
             this.Controls.Add(this.btnCiudades);
             this.Controls.Add(this.btnCerrar);
             this.Controls.Add(this.btnPaises);
+            this.MaximumSize = new System.Drawing.Size(900, 500);
+            this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "frmPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmPrincipal";
             this.ResumeLayout(false);
 
@@ -95,5 +110,6 @@
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.Button btnCiudades;
         private System.Windows.Forms.Button btnCategorias;
+        private System.Windows.Forms.Button btnClientes;
     }
 }

@@ -39,5 +39,12 @@ namespace POO.Jardines.Windows
             frmCategorias frm=new frmCategorias();
             frm.ShowDialog(this);
         }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            frmClientes frm = new frmClientes();
+            frm.ShowDialog(this);
+
+        }
     }
 }

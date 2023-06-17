@@ -27,11 +27,9 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public bool Existe(Ciudad ciudad)
         {
             try
@@ -40,11 +38,9 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public List<Ciudad> Filtrar(Pais pais)
         {
             try
@@ -54,16 +50,13 @@ namespace POO.Jardines.Servicios.Servicios
                 {
                     item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
                 }
-
                 return lista;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public int GetCantidad()
         {
             try
@@ -72,11 +65,9 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public int GetCantidadFiltrada(Pais pais)
         {
             try
@@ -85,11 +76,9 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public List<Ciudad> GetCiudades()
         {
             try
@@ -103,11 +92,9 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual)
         {
             try
@@ -118,15 +105,12 @@ namespace POO.Jardines.Servicios.Servicios
                     item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
                 }
                 return lista;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public void Guardar(Ciudad ciudad)
         {
             try
@@ -142,7 +126,6 @@ namespace POO.Jardines.Servicios.Servicios
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

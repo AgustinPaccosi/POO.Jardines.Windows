@@ -59,15 +59,15 @@ namespace POO.Jardines.Windows
                     {
                         _serviciosCiudades.Guardar(ciudad);
 
-                        if (esEdicion)
+                        if (!esEdicion)
                         {
-                            MessageBox.Show("Registro Editado", "Mensaje",
+                            MessageBox.Show("Registro Agregado", "Mensaje",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                             DialogResult dr = MessageBox.Show("Desea Agregar Otro Registro?", "Pregunta",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                             if (dr == DialogResult.No)
                             {
-                                DialogResult = DialogResult.Cancel;
+                                DialogResult = DialogResult.Cancel; ;
                             }
                             ciudad = null;
                             InicializarControles();
@@ -76,17 +76,10 @@ namespace POO.Jardines.Windows
                         else
                         {
 
-                            MessageBox.Show("Registro Agregado", "Mensaje",
+                            MessageBox.Show("Registro Editado", "Mensaje",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            //DialogResult = DialogResult.OK;
-                            DialogResult dr = MessageBox.Show("Desea Agregar Otro Registro?", "Pregunta",
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
-                            if (dr == DialogResult.No)
-                            {
-                                DialogResult = DialogResult.Cancel;
-                            }
-                            ciudad = null;
-                            InicializarControles();
+                            DialogResult = DialogResult.OK;
+                           
                         }
 
                     }

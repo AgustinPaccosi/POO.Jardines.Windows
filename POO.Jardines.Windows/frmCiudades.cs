@@ -38,6 +38,12 @@ namespace POO.Jardines.Windows
                 paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
                 listaCiudad = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
                 MostrarDatosEnGrilla();
+
+                btnAnterior.Enabled = true;
+                btnSiguiente.Enabled =  true;
+                btnFin.Enabled = true;
+                btnPrincipio.Enabled = true;
+                btnBuscar.BackColor = Color.White;
             }
             catch (Exception)
             {
@@ -71,6 +77,7 @@ namespace POO.Jardines.Windows
             DialogResult dr = frm.ShowDialog(this);
             if (dr == DialogResult.Cancel)
             {
+                RecargarGrilla();
                 return;
             }
             try
@@ -189,6 +196,11 @@ namespace POO.Jardines.Windows
                 LblCantidad.Text = _serviciosCiudades.GetCantidadFiltrada(pais).ToString();
                 btnBuscar.BackColor = Color.Orange;
                 MostrarDatosEnGrilla();
+                 
+                btnAnterior.Enabled=false;
+                btnSiguiente.Enabled=false;
+                btnFin.Enabled=false;
+                btnPrincipio.Enabled=false;
             }
             catch (Exception)
             {
