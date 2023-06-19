@@ -95,6 +95,24 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
+
+        public List<Ciudad> GetCiudades(int paisId)
+        {
+            try
+            {
+                var lista = _repositorioCiudades.GetCiudades(paisId);
+                foreach (var item in lista)
+                {
+                    item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId);
+                }
+                return lista;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual)
         {
             try

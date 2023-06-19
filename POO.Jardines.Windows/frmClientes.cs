@@ -1,6 +1,7 @@
 ﻿using POO.Jardines.Servicios.Interfaces;
 using POO.Jardines.Servicios.Servicios;
 using POO.Jardines.Windows.Helpers;
+using POO.Jardines2023.Entidades.Entidades;
 using POO.Jardines2023.Entidades.Entidades.Dtos.Cliente;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,32 @@ namespace POO.Jardines.Windows
 
         }
 
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            frmClientesAE frm = new frmClientesAE(_serviciosClientes);
+            DialogResult dr= frm.ShowDialog(this);
+            if(dr==DialogResult.Cancel) return;
+            try
+            {
+                Cliente cliente = frm.GetCliente();
+                if (!_serviciosClientes.Existe(cliente))
+                {
+                    _serviciosClientes.Guardar(cliente);
+                    var r = GridHelper.ConstruirFila(dgvDatos);
+                    GridHelper.SetearFila(r, cliente);
+                    GridHelper.AgregarFila(dgvDatos, r);
+                    RecargarGrilla();
+                    //corregir
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
         private void btnPrincipio_Click(object sender, EventArgs e)
         {
             paginaActual = 1;
@@ -118,5 +145,69 @@ namespace POO.Jardines.Windows
             RecargarGrilla();
         }
 
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            ClienteListDto clienteDto = (ClienteListDto)r.Tag;
+            ClienteListDto clienteCopiaDto = (ClienteListDto)clienteDto.Clone();
+            try
+            {
+                Cliente cliente = _serviciosClientes.GetClientePorId(clienteDto.ClienteId);
+                frmClientesAE frm = new frmClientesAE(_serviciosClientes) { Text = "Editar Cliente" };
+                frm.SetCliente(cliente);
+
+                DialogResult dr = frm.ShowDialog(this);
+                if (dr == DialogResult.Cancel)
+                {
+                    RecargarGrilla();
+                    return;
+                }
+                cliente = frm.GetCliente();
+                GridHelper.SetearFila(r, cliente);
+                RecargarGrilla();
+            }
+            catch (Exception ex)
+            {
+                GridHelper.SetearFila(r, clienteCopiaDto);
+                MessageBox.Show(ex.Message, "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void btnBorrar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            ClienteListDto cliente = (ClienteListDto)r.Tag;
+            try
+            {
+                DialogResult dr = MessageBox.Show("Desea borrar el registro Seleccionado?",
+                "Borrar", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button2);
+                if (dr == DialogResult.No)
+                {
+                    return;
+                }
+                _serviciosClientes.Borrar(cliente.ClienteId);
+                GridHelper.Quitarfila(dgvDatos, r);
+                RecargarGrilla();
+                MessageBox.Show("Registro Borrado", "Mensaje",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

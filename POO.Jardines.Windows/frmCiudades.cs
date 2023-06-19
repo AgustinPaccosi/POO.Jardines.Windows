@@ -80,32 +80,6 @@ namespace POO.Jardines.Windows
                 RecargarGrilla();
                 return;
             }
-            try
-            {
-                Ciudad ciudad = frm.GetCiudad();
-                if (!_serviciosCiudades.Existe(ciudad))
-                {
-                    _serviciosCiudades.Guardar(ciudad);
-                    var r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, ciudad);
-                    GridHelper.AgregarFila(dgvDatos, r);
-                    RecargarGrilla();
-
-                    //MessageBox.Show("Registro Agregardo", "Mensaje", MessageBoxButtons.OK,
-                    //    MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Registro Duplicado", "Mensaje", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message, "Mensaje", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
@@ -130,19 +104,6 @@ namespace POO.Jardines.Windows
                 ciudad = frm.GetCiudad();
                 GridHelper.SetearFila(r, ciudad);
                 RecargarGrilla();
-                //if (!_serviciosCiudades.Existe(ciudad))
-                //{
-                //    _serviciosCiudades.Guardar(ciudad);
-                //    GridHelper.SetearFila(r, ciudad);
-                //    MessageBox.Show("El registro se edito Correctamente",
-                //        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //}
-                //else
-                //{
-                //    GridHelper.SetearFila(r, ciudadcopia);
-                //    MessageBox.Show("Registro Duplicado", "Mensaje",
-                //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //}
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POO.Jardines2023.Entidades.Entidades
 {
-    public class Cliente
+    public class Cliente:ICloneable
     {
         public int ClienteId { get; set; }
         public string Codigo { get; set; }
@@ -14,9 +14,17 @@ namespace POO.Jardines2023.Entidades.Entidades
         public string Apellido { get; set;}
         public string Direccion { get; set;}
         public string CodigoPostal { get; set;}
+        public string TelefonoFijo { get; set; }
+        public string TelefonoMovil { get; set; }
+        public string Email { get; set; }
         public int PaisId { get;set;}
         public int CiudadId {get;set;}
         public Pais Pais { get; set;}
-        public Ciudad Ciudad { get; set;}  
+        public Ciudad Ciudad { get; set;}
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

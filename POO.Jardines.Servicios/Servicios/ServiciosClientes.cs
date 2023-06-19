@@ -1,6 +1,7 @@
 ﻿using POO.Jardines.Servicios.Interfaces;
 using POO.Jardines2023.Datos.Interfaces;
 using POO.Jardines2023.Datos.Repositorios;
+using POO.Jardines2023.Entidades.Entidades;
 using POO.Jardines2023.Entidades.Entidades.Dtos.Cliente;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,65 @@ namespace POO.Jardines.Servicios.Servicios
 
 				throw;
 			}
+        }
+
+        public void Guardar(Cliente cliente)
+        {
+            try
+            {
+                if (cliente.ClienteId == 0)
+                {
+                    _repositorioClientes.Agregar(cliente);
+                }
+                else
+                {
+                    _repositorioClientes.Editar(cliente);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public void Borrar(int ClienteId)
+        {
+            try
+            {
+                _repositorioClientes.Borrar(ClienteId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool Existe(Cliente cliente)
+        {
+            try
+            {
+                return _repositorioClientes.Existe(cliente);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Cliente GetClientePorId(int clienteId)
+        {
+            try
+            {
+                return _repositorioClientes.GetClientesPorId(clienteId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

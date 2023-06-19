@@ -102,7 +102,7 @@ namespace POO.Jardines2023.Datos.Repositorios
                         cmd.Parameters.Add("@CiudadId", SqlDbType.Int);
                         cmd.Parameters["@CiudadId"].Value = ciudad.CiudadId;
                     }
-                    cantidad =Convert.ToInt32( cmd.ExecuteScalar());
+                    cantidad =Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             return cantidad > 0;
@@ -284,6 +284,38 @@ namespace POO.Jardines2023.Datos.Repositorios
                 throw;
             }
 
+        }
+
+        public List<Ciudad> GetCiudades(int paisId)
+        {
+            List<Ciudad> listaciudad = new List<Ciudad>();
+            try
+            {
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string SelectQuery = "SELECT CiudadId, NombreCiudad, PaisId FROM dbo.Ciudades WHERE PaisId=@PaisId  ORDER BY NombreCiudad";
+                    using (var cmd = new SqlCommand(SelectQuery, conn))
+                    {
+                        cmd.Parameters.Add("@PaisId", SqlDbType.NVarChar);
+                        cmd.Parameters["@PaisId"].Value = paisId;
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var ciudad = ConstruirCiudad(reader);
+                                listaciudad.Add(ciudad);
+                            }
+                        }
+                    }
+                }
+                return listaciudad;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

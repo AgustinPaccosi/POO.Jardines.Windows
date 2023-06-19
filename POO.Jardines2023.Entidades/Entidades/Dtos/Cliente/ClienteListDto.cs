@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POO.Jardines2023.Entidades.Entidades.Dtos.Cliente
 {
-    public class ClienteListDto
+    public class ClienteListDto:ICloneable
     {
         public int ClienteId { get; set; }
         public string Nombre { get; set; }
@@ -16,5 +16,9 @@ namespace POO.Jardines2023.Entidades.Entidades.Dtos.Cliente
         public string NombrePais { get; set; }
         public string NombreCiudad { get; set; }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

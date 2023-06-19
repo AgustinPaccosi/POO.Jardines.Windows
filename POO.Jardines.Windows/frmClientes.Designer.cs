@@ -256,6 +256,7 @@
             this.btnNuevo.Size = new System.Drawing.Size(56, 44);
             this.btnNuevo.Text = "Nuevo";
             this.btnNuevo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
             // btnEditar
             // 
@@ -265,6 +266,7 @@
             this.btnEditar.Size = new System.Drawing.Size(52, 44);
             this.btnEditar.Text = "Editar";
             this.btnEditar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnBorrar
             // 
@@ -274,6 +276,7 @@
             this.btnBorrar.Size = new System.Drawing.Size(54, 44);
             this.btnBorrar.Text = "Borrar";
             this.btnBorrar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnBorrar.Click += new System.EventHandler(this.btnBorrar_Click);
             // 
             // toolStripSeparator1
             // 
@@ -336,7 +339,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "frmClientes";
-            this.Text = "frmClientes";
+            this.Text = "Clientes";
             this.Load += new System.EventHandler(this.frmClientes_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDatos)).EndInit();

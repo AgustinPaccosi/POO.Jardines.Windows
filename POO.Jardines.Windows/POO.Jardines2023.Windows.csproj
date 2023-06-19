@@ -75,6 +75,12 @@
     <Compile Include="frmClientes.Designer.cs">
       <DependentUpon>frmClientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmClientesAE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClientesAE.Designer.cs">
+      <DependentUpon>frmClientesAE.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPaisAE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,10 @@
       <Project>{47ff2fd9-5f07-41a8-ad34-91fa5779eb72}</Project>
       <Name>POO.Jardines2023.Servicios</Name>
     </ProjectReference>
+    <ProjectReference Include="..\POO.Jardines2023.Datos\POO.Jardines2023.Datos.csproj">
+      <Project>{97DD0D74-A9F9-41A1-8925-83E97F563602}</Project>
+      <Name>POO.Jardines2023.Datos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\POO.Jardines2023.Entidades\POO.Jardines2023.Entidades.csproj">
       <Project>{7112ebff-db7d-4982-aa92-95baeade0f73}</Project>
       <Name>POO.Jardines2023.Entidades</Name>
@@ -133,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmClientes.resx">
       <DependentUpon>frmClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClientesAE.resx">
+      <DependentUpon>frmClientesAE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPaisAE.resx">
       <DependentUpon>frmPaisAE.cs</DependentUpon>

@@ -20,6 +20,114 @@ namespace POO.Jardines2023.Datos.Repositorios
             cadenaConexion = ConfigurationManager.ConnectionStrings["MiConexion"].ToString();
         }
 
+        public void Agregar(Cliente cliente)
+        {
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string InsertQuery = @"INSERT INTO dbo.Clientes (Nombres, Apellido, Direccion, CodigoPostal, PaisId, CiudadId, Email ) 
+                                        VALUES (@Nombres, @Apellido, @Direccion, @CodigoPostal, @PaisId, @CiudadId, @Email ); SELECT SCOPE_IDENTITY()";
+                using (var comando = new SqlCommand(InsertQuery, conn))
+                {
+                    comando.Parameters.Add("@Nombres", SqlDbType.NVarChar);
+                    comando.Parameters["@Nombres"].Value = cliente.Nombre;
+
+                    comando.Parameters.Add("@Apellido", SqlDbType.NVarChar);
+                    comando.Parameters["@Apellido"].Value = cliente.Apellido;
+                    
+                    comando.Parameters.Add("@Direccion", SqlDbType.NVarChar);
+                    comando.Parameters["@Direccion"].Value = cliente.Direccion;
+
+                    comando.Parameters.Add("@CodigoPostal", SqlDbType.NVarChar);
+                    comando.Parameters["@CodigoPostal"].Value = cliente.CodigoPostal;
+
+                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
+                    comando.Parameters["@PaisId"].Value = cliente.PaisId;
+
+                    comando.Parameters.Add("@CiudadId", SqlDbType.NVarChar);
+                    comando.Parameters["@CiudadId"].Value = cliente.CiudadId;
+
+                    comando.Parameters.Add("@Email", SqlDbType.NVarChar);
+                    comando.Parameters["@Email"].Value = cliente.Email;
+
+                    //ciudad.CiudadId = (int)comando.ExecuteScalar();
+                    int Id = Convert.ToInt32(comando.ExecuteScalar());
+                    cliente.ClienteId = Id;
+                }
+            }
+        }
+
+        public void Borrar(int ClienteID)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM dbo.Clientes where ClienteId=@ClienteId";
+                    using (var comando = new SqlCommand(deleteQuery, conn))
+                    {
+                        comando.Parameters.Add("@ClienteId", SqlDbType.Int);
+                        comando.Parameters["@ClienteId"].Value = ClienteID;
+
+                        comando.ExecuteNonQuery();
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }        }
+
+        public void Editar(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Existe(Cliente cliente)
+        {
+            try
+            {
+                var cantidad = 0;
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    String SelectQuery;
+                    if (cliente.ClienteId == 0)
+                    {
+                        SelectQuery = "SELECT COUNT(*) FROM dbo.Clientes WHERE Nombres=@Nombres AND Apellido=@Apellido";
+                    }
+                    else
+                    {
+                        SelectQuery = "SELECT COUNT(*) FROM dbo.Clientes WHERE Nombres=@Nombres AND Apellido=@Apellido AND ClienteId=@ClienteId";
+                    }
+                    using (var cmd = new SqlCommand(SelectQuery, conn))
+                    {
+                        cmd.Parameters.Add("@Nombres", SqlDbType.NVarChar);
+                        cmd.Parameters["@Nombres"].Value = cliente.Nombre;
+
+                        cmd.Parameters.Add("@Apellido", SqlDbType.NVarChar);
+                        cmd.Parameters["@Apellido"].Value = cliente.Apellido;
+
+                        if (cliente.ClienteId == 0)
+                        {
+                            cmd.Parameters.Add("@ClienteId", SqlDbType.Int);
+                            cmd.Parameters["@ClienteId"].Value = cliente.ClienteId;
+                        }
+                        cantidad = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                }
+                return cantidad > 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public int GetCantidad()
         {
             int cantidad = 0;
@@ -33,6 +141,11 @@ namespace POO.Jardines2023.Datos.Repositorios
                 }
             }
             return cantidad;
+        }
+
+        public List<Ciudad> GetClienteFiltrado(int paisId)
+        {
+            throw new NotImplementedException();
         }
 
         public List<ClienteListDto> GetClientes()
@@ -63,6 +176,60 @@ namespace POO.Jardines2023.Datos.Repositorios
 
 				throw;
 			}
+        }
+
+        public Cliente GetClientesPorId(int clienteId)
+        {
+            try
+            {
+                Cliente cliente = null; 
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    
+                    conn.Open();
+                    string SelectQuery = @"Select ClienteId, Nombres, Apellido, PaisId, CiudadId 
+                        FROM dbo.Clientes WHERE ClienteId=@ClienteId Order By Apellido, Nombres";
+                    using (var cmd = new SqlCommand(SelectQuery, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                //var clienteDto = ConstruirClienteDto(reader);
+                                //listaclientesdto.Add(clienteDto);
+                                cliente = new Cliente()
+                                {
+                                    ClienteId = reader.GetInt32(0),
+                                    Nombre=reader.GetString(1),
+                                    Apellido=reader.GetString(2),
+                                    Direccion=reader.GetString(3),
+                                    CodigoPostal=reader.GetString(4),
+                                    PaisId=reader.GetInt32(5),
+                                    CiudadId=reader.GetInt32(6),
+                                    Email=reader.GetString(7)
+                                };
+                            }
+                        }
+                    }
+                }
+                return cliente;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private ClienteListDto ConstruirClienteDto(SqlDataReader reader)
+        {
+            return new ClienteListDto()
+            {
+                ClienteId = reader.GetInt32(0),
+                Nombre = reader.GetString(1),
+                Apellido = reader.GetString(2),
+                PaisId = reader.GetInt32(3),
+                CiudadId = reader.GetInt32(4),
+            };
         }
 
         public List<ClienteListDto> GetClientesPorPagina(int registrosPorPagina, int paginaActual)
@@ -102,16 +269,5 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         }
 
-        private ClienteListDto ConstruirClienteDto(SqlDataReader reader)
-        {
-            return new ClienteListDto()
-            {
-                ClienteId = reader.GetInt32(0),
-                Nombre = reader.GetString(1),
-                Apellido = reader.GetString(2),
-                PaisId = reader.GetInt32(3),
-                CiudadId = reader.GetInt32(4),
-            };
-        }
     }
 }

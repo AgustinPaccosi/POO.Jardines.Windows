@@ -27,5 +27,21 @@ namespace POO.Jardines.Windows.Helpers
             combo.ValueMember = "PaisId";
             combo.SelectedIndex = 0;
         }
+        public static void CargarCombooCiudades(ref ComboBox combo, int paisId)
+        {
+            IServiciosCiudades serviciosCiudades= new ServiciosCiudades();
+            var listaCiudades=serviciosCiudades.GetCiudades(paisId);
+            var defaultCiudad = new Ciudad()
+            {
+                CiudadId = 0,
+                NombreCiudad = "Seleccion Ciudad"
+            };
+            listaCiudades.Insert(0, defaultCiudad);
+            combo.DataSource = listaCiudades;
+            combo.DisplayMember = "NombreCiudad";
+            combo.ValueMember = "CiudadId";
+            combo.SelectedIndex = 0;
+
+        }
     }
 }
