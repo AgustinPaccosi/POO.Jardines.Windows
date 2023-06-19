@@ -18,10 +18,13 @@ namespace POO.Jardines.Windows
     public partial class frmClientesAE : Form
     {
         private readonly IServiciosClientes _servicioClientes;
+        private readonly IServiciosCiudades _servicioCiudades;
+
         public frmClientesAE(IServiciosClientes serviciosClientes)
         {
             InitializeComponent();
-            _servicioClientes= serviciosClientes;
+            _servicioClientes = serviciosClientes;
+            _servicioCiudades = new ServiciosCiudades();
         }
         private Cliente cliente;
         private bool esEdicion = false;
@@ -30,7 +33,19 @@ namespace POO.Jardines.Windows
         {
             base.OnLoad(e);
             CombosHelper.CargarComboPaises(ref cboPaises);
-            
+            if (cliente != null)
+            {
+                txtNombres.Text = cliente.Nombre;
+                txtApellido.Text = cliente.Apellido;
+                txtDirec.Text = cliente.Direccion;
+                txtEmail.Text = cliente.Email;
+                txtCodPostal.Text = cliente.CodigoPostal;
+                cboPaises.SelectedValue = cliente.PaisId;
+                cboCiudades.SelectedValue = cliente.CiudadId;
+
+                esEdicion = true;
+            }
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -74,15 +89,13 @@ namespace POO.Jardines.Windows
                                 DialogResult = DialogResult.Cancel; ;
                             }
                             cliente = null;
-                            //IniciarControles
+                            InicializarControles();
                         }
                         else
                         {
-
                             MessageBox.Show("Registro Editado", "Mensaje",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                             DialogResult = DialogResult.OK;
-
                         }
 
                     }
@@ -100,6 +113,7 @@ namespace POO.Jardines.Windows
 
             }
         }
+
 
         private bool ValidarDatos()
         {
@@ -160,6 +174,59 @@ namespace POO.Jardines.Windows
         public Cliente GetCliente()
         {
             return cliente;
+        }
+        private void InicializarControles()
+        {
+            txtNombres.Clear();
+            txtApellido.Clear();
+            txtDirec.Clear();
+            txtCodPostal.Clear();
+            txtEmail.Clear();
+            txtTelFijo.Clear();
+            txtCel.Clear();
+            cboPaises.SelectedIndex = 0;
+        }
+
+        private void btnAgregarPais_Click(object sender, EventArgs e)
+        {
+            var _serviciosPaises = new ServicioPaises();
+            frmPaisAE frm = new frmPaisAE() { Text = "Agregar Pais" };
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) { return; }
+            try
+            {
+                var pais = frm.GetPais();
+                if (!_serviciosPaises.Existe(pais))
+                {
+                    _serviciosPaises.Guardar(pais);
+                    MessageBox.Show("Registro Agregado", "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Registro Existente", "Mensaje",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Mensaje",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            CombosHelper.CargarComboPaises(ref cboPaises);
+
+        }
+
+        private void btnAgregarCiudad_Click(object sender, EventArgs e)
+        {
+            frmCiudadesAE frm = new frmCiudadesAE(_servicioCiudades) { Text = "Agregar Ciudad" };
+            DialogResult dr = frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
+
         }
     }
 }

@@ -47,8 +47,8 @@
             this.cboPaises = new System.Windows.Forms.ComboBox();
             this.cboCiudades = new System.Windows.Forms.ComboBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnAgregarPais = new System.Windows.Forms.Button();
+            this.btnAgregarCiudad = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -215,23 +215,25 @@
             this.txtEmail.Size = new System.Drawing.Size(332, 22);
             this.txtEmail.TabIndex = 10;
             // 
-            // button1
+            // btnAgregarPais
             // 
-            this.button1.Location = new System.Drawing.Point(399, 122);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 38);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Ag. Pais";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAgregarPais.Location = new System.Drawing.Point(399, 122);
+            this.btnAgregarPais.Name = "btnAgregarPais";
+            this.btnAgregarPais.Size = new System.Drawing.Size(100, 38);
+            this.btnAgregarPais.TabIndex = 11;
+            this.btnAgregarPais.Text = "Ag. Pais";
+            this.btnAgregarPais.UseVisualStyleBackColor = true;
+            this.btnAgregarPais.Click += new System.EventHandler(this.btnAgregarPais_Click);
             // 
-            // button2
+            // btnAgregarCiudad
             // 
-            this.button2.Location = new System.Drawing.Point(399, 166);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 38);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Ag. Ciudad";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAgregarCiudad.Location = new System.Drawing.Point(399, 166);
+            this.btnAgregarCiudad.Name = "btnAgregarCiudad";
+            this.btnAgregarCiudad.Size = new System.Drawing.Size(100, 38);
+            this.btnAgregarCiudad.TabIndex = 11;
+            this.btnAgregarCiudad.Text = "Ag. Ciudad";
+            this.btnAgregarCiudad.UseVisualStyleBackColor = true;
+            this.btnAgregarCiudad.Click += new System.EventHandler(this.btnAgregarCiudad_Click);
             // 
             // label10
             // 
@@ -273,8 +275,8 @@
             this.ClientSize = new System.Drawing.Size(802, 453);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAgregarCiudad);
+            this.Controls.Add(this.btnAgregarPais);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.cboCiudades);
             this.Controls.Add(this.cboPaises);
@@ -323,8 +325,8 @@
         private System.Windows.Forms.ComboBox cboPaises;
         private System.Windows.Forms.ComboBox cboCiudades;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAgregarPais;
+        private System.Windows.Forms.Button btnAgregarCiudad;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;

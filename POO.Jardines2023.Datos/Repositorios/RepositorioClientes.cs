@@ -83,7 +83,41 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         public void Editar(Cliente cliente)
         {
-            throw new NotImplementedException();
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string UpdateQuery = @"UPDATE dbo.Clientes SET Nombres=@Nombres, Apellido=@Apellido,
+                            Direccion=@Direccion, CodigoPostal=@CodigoPostal, PaisId=@PaisId, CiudadId=@CiudadId, Email=@Email
+                            WHERE ClienteId=@ClienteId";
+                using (var cmd = new SqlCommand(UpdateQuery, conn))
+                {
+                    cmd.Parameters.Add("@Nombres", SqlDbType.NVarChar);
+                    cmd.Parameters["@Nombres"].Value = cliente.Nombre;
+
+                    cmd.Parameters.Add("@Apellido", SqlDbType.NVarChar);
+                    cmd.Parameters["@Apellido"].Value = cliente.Apellido;
+
+                    cmd.Parameters.Add("@Direccion", SqlDbType.NVarChar);
+                    cmd.Parameters["@Direccion"].Value = cliente.Direccion;
+
+                    cmd.Parameters.Add("@CodigoPostal", SqlDbType.NVarChar);
+                    cmd.Parameters["@CodigoPostal"].Value = cliente.CodigoPostal;
+
+                    cmd.Parameters.Add("@PaisId", SqlDbType.Int);
+                    cmd.Parameters["@PaisId"].Value = cliente.PaisId;
+
+                    cmd.Parameters.Add("@CiudadId", SqlDbType.Int);
+                    cmd.Parameters["@CiudadId"].Value = cliente.CiudadId;
+
+                    cmd.Parameters.Add("@Email", SqlDbType.NVarChar);
+                    cmd.Parameters["@Email"].Value = cliente.Email;
+
+                    cmd.Parameters.Add("@ClienteId", SqlDbType.Int);
+                    cmd.Parameters["@ClienteId"].Value = cliente.ClienteId;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public bool Existe(Cliente cliente)
@@ -111,7 +145,7 @@ namespace POO.Jardines2023.Datos.Repositorios
                         cmd.Parameters.Add("@Apellido", SqlDbType.NVarChar);
                         cmd.Parameters["@Apellido"].Value = cliente.Apellido;
 
-                        if (cliente.ClienteId == 0)
+                        if (cliente.ClienteId != 0)
                         {
                             cmd.Parameters.Add("@ClienteId", SqlDbType.Int);
                             cmd.Parameters["@ClienteId"].Value = cliente.ClienteId;
@@ -187,19 +221,21 @@ namespace POO.Jardines2023.Datos.Repositorios
                 {
                     
                     conn.Open();
-                    string SelectQuery = @"Select ClienteId, Nombres, Apellido, PaisId, CiudadId 
-                        FROM dbo.Clientes WHERE ClienteId=@ClienteId Order By Apellido, Nombres";
+                    string SelectQuery = @"Select ClienteId, Nombres, Apellido, Direccion, CodigoPostal, PaisId, CiudadId, Email
+                        FROM dbo.Clientes WHERE ClienteId=@ClienteId";
                     using (var cmd = new SqlCommand(SelectQuery, conn))
                     {
+                        cmd.Parameters.Add("@ClienteId", SqlDbType.Int);
+                        cmd.Parameters["@ClienteId"].Value = clienteId;
+
                         using (var reader = cmd.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                //var clienteDto = ConstruirClienteDto(reader);
-                                //listaclientesdto.Add(clienteDto);
+                                reader.Read();
                                 cliente = new Cliente()
                                 {
-                                    ClienteId = reader.GetInt32(0),
+                                    ClienteId =reader.GetInt32(0),
                                     Nombre=reader.GetString(1),
                                     Apellido=reader.GetString(2),
                                     Direccion=reader.GetString(3),

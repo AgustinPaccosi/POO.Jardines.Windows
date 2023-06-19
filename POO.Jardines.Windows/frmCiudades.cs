@@ -54,8 +54,6 @@ namespace POO.Jardines.Windows
         private void MostrarDatosEnGrilla()
         {
             GridHelper.LimpiarGrilla(dgvDatos);
-            //List<Ciudad> ciudadesOrdenadas = listaCiudad.OrderBy(ciudad => ciudad.Pais.NombrePais).ToList();
-
             foreach (var ciudad in listaCiudad)
             {
                 DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
