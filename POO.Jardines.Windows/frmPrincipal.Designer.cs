@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.btnPaises = new System.Windows.Forms.Button();
             this.btnCerrar = new System.Windows.Forms.Button();
             this.btnCiudades = new System.Windows.Forms.Button();
@@ -37,52 +38,65 @@
             // 
             // btnPaises
             // 
+            this.btnPaises.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnPaises.Image = ((System.Drawing.Image)(resources.GetObject("btnPaises.Image")));
             this.btnPaises.Location = new System.Drawing.Point(93, 75);
             this.btnPaises.Name = "btnPaises";
-            this.btnPaises.Size = new System.Drawing.Size(107, 91);
+            this.btnPaises.Size = new System.Drawing.Size(152, 122);
             this.btnPaises.TabIndex = 0;
             this.btnPaises.Text = "Paises";
-            this.btnPaises.UseVisualStyleBackColor = true;
+            this.btnPaises.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPaises.UseVisualStyleBackColor = false;
             this.btnPaises.Click += new System.EventHandler(this.btnPaises_Click);
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Location = new System.Drawing.Point(681, 347);
+            this.btnCerrar.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCerrar.Image = global::POO.Jardines.Windows.Properties.Resources.shutdown_48px;
+            this.btnCerrar.Location = new System.Drawing.Point(612, 307);
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(107, 91);
             this.btnCerrar.TabIndex = 0;
-            this.btnCerrar.Text = "Cerrar";
-            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnCerrar.UseVisualStyleBackColor = false;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // btnCiudades
             // 
-            this.btnCiudades.Location = new System.Drawing.Point(244, 75);
+            this.btnCiudades.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCiudades.Image = global::POO.Jardines.Windows.Properties.Resources.city_50px;
+            this.btnCiudades.Location = new System.Drawing.Point(251, 75);
             this.btnCiudades.Name = "btnCiudades";
-            this.btnCiudades.Size = new System.Drawing.Size(107, 91);
+            this.btnCiudades.Size = new System.Drawing.Size(152, 122);
             this.btnCiudades.TabIndex = 1;
             this.btnCiudades.Text = "Ciudades";
-            this.btnCiudades.UseVisualStyleBackColor = true;
+            this.btnCiudades.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCiudades.UseVisualStyleBackColor = false;
             this.btnCiudades.Click += new System.EventHandler(this.btnCiudades_Click);
             // 
             // btnCategorias
             // 
-            this.btnCategorias.Location = new System.Drawing.Point(406, 75);
+            this.btnCategorias.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnCategorias.Image = global::POO.Jardines.Windows.Properties.Resources.categorize_50px;
+            this.btnCategorias.Location = new System.Drawing.Point(409, 75);
             this.btnCategorias.Name = "btnCategorias";
-            this.btnCategorias.Size = new System.Drawing.Size(107, 91);
+            this.btnCategorias.Size = new System.Drawing.Size(152, 122);
             this.btnCategorias.TabIndex = 2;
             this.btnCategorias.Text = "Categorias";
-            this.btnCategorias.UseVisualStyleBackColor = true;
+            this.btnCategorias.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCategorias.UseVisualStyleBackColor = false;
             this.btnCategorias.Click += new System.EventHandler(this.btnCategorias_Click);
             // 
             // btnClientes
             // 
-            this.btnClientes.Location = new System.Drawing.Point(93, 208);
+            this.btnClientes.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnClientes.Image = global::POO.Jardines.Windows.Properties.Resources.client_management_50px;
+            this.btnClientes.Location = new System.Drawing.Point(567, 75);
             this.btnClientes.Name = "btnClientes";
-            this.btnClientes.Size = new System.Drawing.Size(107, 91);
+            this.btnClientes.Size = new System.Drawing.Size(152, 122);
             this.btnClientes.TabIndex = 3;
             this.btnClientes.Text = "Clientes";
-            this.btnClientes.UseVisualStyleBackColor = true;
+            this.btnClientes.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnClientes.UseVisualStyleBackColor = false;
             this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
             // 
             // frmPrincipal

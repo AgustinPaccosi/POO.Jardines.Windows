@@ -74,21 +74,25 @@
             // 
             // btnOK
             // 
+            this.btnOK.Image = global::POO.Jardines.Windows.Properties.Resources.ok_24px;
             this.btnOK.Location = new System.Drawing.Point(188, 250);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 70);
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "OK";
+            this.btnOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.Image = global::POO.Jardines.Windows.Properties.Resources.close_window_32px;
             this.btnCancel.Location = new System.Drawing.Point(396, 250);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 70);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
+            this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // errorProvider1

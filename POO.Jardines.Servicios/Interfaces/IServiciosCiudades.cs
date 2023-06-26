@@ -12,11 +12,11 @@ namespace POO.Jardines.Servicios.Interfaces
         void Guardar(Ciudad ciudad);
         void Borrar(int ciudadId);
         bool Existe(Ciudad ciudad);
-        int GetCantidad();
+        int GetCantidad(int? paisId);
         List<Ciudad> Filtrar(Pais pais);
         int GetCantidadFiltrada(Pais pais);
-        List<Ciudad> GetCiudades();
+        //List<Ciudad> GetCiudades();
         List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual);
-        List<Ciudad> GetCiudades(int paisId);
+        List<Ciudad> GetCiudades(int? paisId);
     }
 }

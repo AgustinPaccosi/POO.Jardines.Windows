@@ -263,8 +263,8 @@ namespace POO.Jardines2023.Datos.Repositorios
                 ClienteId = reader.GetInt32(0),
                 Nombre = reader.GetString(1),
                 Apellido = reader.GetString(2),
-                PaisId = reader.GetInt32(3),
-                CiudadId = reader.GetInt32(4),
+                NombrePais = reader.GetString(3),
+                NombreCiudad = reader.GetString(4),
             };
         }
 
@@ -277,7 +277,12 @@ namespace POO.Jardines2023.Datos.Repositorios
                 {
                     conn.Open();
                     //string SelectQuery = "SELECT CiudadId, NombreCiudad, PaisId FROM dbo.Ciudades ORDER BY PaisId, NombreCiudad OFFSET @cantidadRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
-                    string SelectQuery = "SELECT ClienteId, Nombres, Apellido, PaisId, CiudadId FROM dbo.clientes order by Apellido, Nombres OFFSET @cantidadRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+                    string SelectQuery = @"SELECT C.ClienteId, C.Nombres, C.Apellido, P.NombrePais, S.NombreCiudad 
+                            FROM Clientes C
+                            INNER JOIN Paises P ON P.PaisId=C.PaisId
+                            INNER JOIN Ciudades S ON S.CiudadId=C.CiudadId
+                            order by C.Apellido, c.Nombres 
+                            OFFSET @cantidadRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
                     using (var comando = new SqlCommand(SelectQuery, conn))
                     {
                         comando.Parameters.Add("@cantidadRegistros", SqlDbType.Int);
@@ -305,5 +310,39 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         }
 
+        public List<ClienteListDto> GetClientes(Pais paisFiltro, Ciudad ciudadFiltro)
+        {
+            List<ClienteListDto> listaclientesdto = new List<ClienteListDto>();
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string SelectQuery = @"SELECT C.ClienteId, C.Nombres, C.Apellido, P.NombrePais, S.NombreCiudad 
+                        FROM Clientes C
+                        INNER JOIN Paises P ON P.PaisId=C.PaisId
+                        INNER JOIN Ciudades S ON S.CiudadId=C.CiudadId
+                        WHERE C.PaisId=@PaisId AND C.CiudadId=@CiudadId
+                        Order By Apellido, Nombres";
+                using (var cmd = new SqlCommand(SelectQuery, conn))
+                {
+                    cmd.Parameters.Add("@PaisId", SqlDbType.Int);
+                    cmd.Parameters["@PaisId"].Value = paisFiltro.PaisId;
+
+                    cmd.Parameters.Add("@CiudadId", SqlDbType.Int);
+                    cmd.Parameters["@CiudadId"].Value = ciudadFiltro.CiudadId;
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            var clienteDto = ConstruirClienteDto(reader);
+                            listaclientesdto.Add(clienteDto);
+                        }
+                    }
+                }
+            }
+            return listaclientesdto;
+
+        }
     }
 }

@@ -150,15 +150,29 @@ namespace POO.Jardines2023.Datos.Repositorios
             };
         }
 
-        public int GetCantidad()
+        public int GetCantidad(int? paisId)
         {
             int cantidad = 0;
             using (var conn=new SqlConnection(cadenaConexion))
             {
                 conn.Open();
-                string SelectQuery = "SELECT COUNT(*) FROM dbo.Ciudades";
+                string SelectQuery;
+                if (paisId==null)
+                {
+                    SelectQuery = "SELECT COUNT(*) FROM dbo.Ciudades";
+                }
+                else
+                {
+                    SelectQuery = "SELECT COUNT(*) FROM dbo.Ciudades WHERE paisId=@paisId";
+                }
                 using (var cmd =new SqlCommand (SelectQuery,conn))
                 {
+                    if (paisId.HasValue)
+                    {
+                        cmd.Parameters.Add("@PaisId", SqlDbType.NVarChar);
+                        cmd.Parameters["@PaisId"].Value = paisId;
+                    }
+
                     cantidad = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -286,7 +300,7 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         }
 
-        public List<Ciudad> GetCiudades(int paisId)
+        public List<Ciudad> GetCiudades(int? paisId)
         {
             List<Ciudad> listaciudad = new List<Ciudad>();
             try
@@ -294,12 +308,26 @@ namespace POO.Jardines2023.Datos.Repositorios
                 using (var conn = new SqlConnection(cadenaConexion))
                 {
                     conn.Open();
-                    string SelectQuery = "SELECT CiudadId, NombreCiudad, PaisId FROM dbo.Ciudades WHERE PaisId=@PaisId  ORDER BY NombreCiudad";
+                    string SelectQuery;
+                    if (paisId==null)
+                    {
+                        SelectQuery = @"SELECT CiudadId, NombreCiudad, PaisId 
+                                FROM dbo.Ciudades ORDER BY NombreCiudad";
+
+                    }
+                    else
+                    {
+                        SelectQuery = @"SELECT CiudadId, NombreCiudad, PaisId FROM dbo.Ciudades 
+                                WHERE PaisId=@PaisId  ORDER BY NombreCiudad";
+
+                    }
                     using (var cmd = new SqlCommand(SelectQuery, conn))
                     {
-                        cmd.Parameters.Add("@PaisId", SqlDbType.NVarChar);
-                        cmd.Parameters["@PaisId"].Value = paisId;
-
+                        if (paisId.HasValue)
+                        {
+                            cmd.Parameters.Add("@PaisId", SqlDbType.NVarChar);
+                            cmd.Parameters["@PaisId"].Value = paisId;
+                        }
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())

@@ -7,9 +7,10 @@ namespace POO.Jardines.Servicios.Interfaces
     {
         void Borrar(int paisId);
         bool Existe(Pais pais);
-        int GetCantidad();
+        int GetCantidad(string textoFiltro);
         List<Pais> GetPaises();
-        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual);
+        List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual, string textoFiltro);
+        //List<Pais> GetPaises(string textoFiltro);
 
         void Guardar(Pais pais);
         Pais GetPaisPorId(int paisId);

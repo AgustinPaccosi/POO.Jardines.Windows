@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvDatos = new System.Windows.Forms.DataGridView();
             this.ColPais = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,7 +49,9 @@
             this.btnEditar = new System.Windows.Forms.ToolStripButton();
             this.btnBorrar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnBuscar = new System.Windows.Forms.ToolStripButton();
+            this.btnBuscar = new System.Windows.Forms.ToolStripDropDownButton();
+            this.porNombreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.porPaisYCiudadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnActualizar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
@@ -250,7 +251,7 @@
             // 
             // btnNuevo
             // 
-            this.btnNuevo.Image = ((System.Drawing.Image)(resources.GetObject("btnNuevo.Image")));
+            this.btnNuevo.Image = global::POO.Jardines.Windows.Properties.Resources.new_file_32px;
             this.btnNuevo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnNuevo.Name = "btnNuevo";
             this.btnNuevo.Size = new System.Drawing.Size(56, 44);
@@ -260,7 +261,7 @@
             // 
             // btnEditar
             // 
-            this.btnEditar.Image = ((System.Drawing.Image)(resources.GetObject("btnEditar.Image")));
+            this.btnEditar.Image = global::POO.Jardines.Windows.Properties.Resources.edit_file_32px;
             this.btnEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(52, 44);
@@ -270,7 +271,7 @@
             // 
             // btnBorrar
             // 
-            this.btnBorrar.Image = ((System.Drawing.Image)(resources.GetObject("btnBorrar.Image")));
+            this.btnBorrar.Image = global::POO.Jardines.Windows.Properties.Resources.delete_file_32px;
             this.btnBorrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBorrar.Name = "btnBorrar";
             this.btnBorrar.Size = new System.Drawing.Size(54, 44);
@@ -285,16 +286,32 @@
             // 
             // btnBuscar
             // 
-            this.btnBuscar.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar.Image")));
+            this.btnBuscar.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.porNombreToolStripMenuItem,
+            this.porPaisYCiudadToolStripMenuItem});
+            this.btnBuscar.Image = global::POO.Jardines.Windows.Properties.Resources.filter_32px;
             this.btnBuscar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(56, 44);
+            this.btnBuscar.Size = new System.Drawing.Size(66, 44);
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // porNombreToolStripMenuItem
+            // 
+            this.porNombreToolStripMenuItem.Name = "porNombreToolStripMenuItem";
+            this.porNombreToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.porNombreToolStripMenuItem.Text = "Por Nombre";
+            // 
+            // porPaisYCiudadToolStripMenuItem
+            // 
+            this.porPaisYCiudadToolStripMenuItem.Name = "porPaisYCiudadToolStripMenuItem";
+            this.porPaisYCiudadToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.porPaisYCiudadToolStripMenuItem.Text = "Por Pais y Ciudad";
+            this.porPaisYCiudadToolStripMenuItem.Click += new System.EventHandler(this.porPaisYCiudadToolStripMenuItem_Click);
+            // 
             // btnActualizar
             // 
-            this.btnActualizar.Image = ((System.Drawing.Image)(resources.GetObject("btnActualizar.Image")));
+            this.btnActualizar.Image = global::POO.Jardines.Windows.Properties.Resources.restart_32px;
             this.btnActualizar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnActualizar.Name = "btnActualizar";
             this.btnActualizar.Size = new System.Drawing.Size(79, 44);
@@ -308,7 +325,7 @@
             // 
             // toolStripButton6
             // 
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.Image = global::POO.Jardines.Windows.Properties.Resources.print_32px;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(70, 44);
@@ -322,7 +339,7 @@
             // 
             // btnCerrar
             // 
-            this.btnCerrar.Image = ((System.Drawing.Image)(resources.GetObject("btnCerrar.Image")));
+            this.btnCerrar.Image = global::POO.Jardines.Windows.Properties.Resources.cancel_24px;
             this.btnCerrar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(53, 44);
@@ -373,7 +390,6 @@
         private System.Windows.Forms.ToolStripButton btnEditar;
         private System.Windows.Forms.ToolStripButton btnBorrar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton btnBuscar;
         private System.Windows.Forms.ToolStripButton btnActualizar;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
@@ -382,5 +398,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColPais;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCiudad;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColCliente;
+        private System.Windows.Forms.ToolStripDropDownButton btnBuscar;
+        private System.Windows.Forms.ToolStripMenuItem porNombreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem porPaisYCiudadToolStripMenuItem;
     }
 }

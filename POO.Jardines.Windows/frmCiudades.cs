@@ -34,15 +34,11 @@ namespace POO.Jardines.Windows
         {
             try
             {
-                registros = _serviciosCiudades.GetCantidad();
+                registros = _serviciosCiudades.GetCantidad(null);
                 paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
                 listaCiudad = _serviciosCiudades.GetCiudadesPorPagina(registrosPorPagina, paginaActual);
                 MostrarDatosEnGrilla();
 
-                btnAnterior.Enabled = true;
-                btnSiguiente.Enabled =  true;
-                btnFin.Enabled = true;
-                btnPrincipio.Enabled = true;
                 btnBuscar.BackColor = Color.White;
             }
             catch (Exception)
@@ -60,7 +56,7 @@ namespace POO.Jardines.Windows
                 GridHelper.SetearFila(r, ciudad);
                 GridHelper.AgregarFila(dgvDatos, r);
             }
-            LblCantidad.Text = _serviciosCiudades.GetCantidad().ToString();
+            LblCantidad.Text = _serviciosCiudades.GetCantidad(null).ToString();
             lblPaginas1.Text = paginaActual.ToString();
             lblPaginas2.Text = paginasTotales.ToString();
 
@@ -152,14 +148,11 @@ namespace POO.Jardines.Windows
             {
                 var pais = frm.GetPais();
                 listaCiudad = _serviciosCiudades.Filtrar(pais);
-                LblCantidad.Text = _serviciosCiudades.GetCantidadFiltrada(pais).ToString();
                 btnBuscar.BackColor = Color.Orange;
+                registros = _serviciosCiudades.GetCantidad(pais.PaisId);
                 MostrarDatosEnGrilla();
-                 
-                btnAnterior.Enabled=false;
-                btnSiguiente.Enabled=false;
-                btnFin.Enabled=false;
-                btnPrincipio.Enabled=false;
+                paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
+                LblCantidad.Text = _serviciosCiudades.GetCantidad(pais.PaisId).ToString();
             }
             catch (Exception)
             {

@@ -15,10 +15,10 @@ namespace POO.Jardines2023.Datos.Interfaces
         void Editar(Ciudad ciudad);
         bool Existe(Ciudad ciudad);
         List<Ciudad> Filtrar(Pais pais);
-        int GetCantidad();
+        int GetCantidad(int? paisId);
         int GetCantidadFiltrada(Pais pais);
         List<Ciudad> GetCiudades();
-        List<Ciudad> GetCiudades(int paisId);
+        List<Ciudad> GetCiudades(int? paisId);
         List<Ciudad> GetCiudadesPorPagina(int registrosPorPagina, int paginaActual);
     }
 }

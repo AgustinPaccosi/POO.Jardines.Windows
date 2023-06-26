@@ -28,11 +28,11 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
-        public int GetCantidad()
+        public int GetCantidad(string textoFiltro=null)
         {
             try
             {
-                return _repositorio.GetCantidad();
+                return _repositorio.GetCantidad(textoFiltro);
             }
             catch (Exception)
             {
@@ -40,6 +40,19 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
+
+        //public int GetCantidad()
+        //{
+        //    try
+        //    {
+        //        return _repositorio.GetCantidad();
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
         public void Borrar(int paisId)
         {
             try
@@ -98,11 +111,24 @@ namespace POO.Jardines.Servicios.Servicios
             }
         }
 
-        public List<Pais> Filtrar(Pais pais)
+        //public List<Pais> Filtrar(Pais pais)
+        //{
+        //    try
+        //    {
+        //        return _repositorio.FiltrarPais(pais);
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual, string textoFiltro=null)
         {
             try
             {
-                return _repositorio.FiltrarPais(pais);
+                return _repositorio.GetPaisesPorPagina(cantidad, paginaActual, textoFiltro);
             }
             catch (Exception)
             {
@@ -111,11 +137,11 @@ namespace POO.Jardines.Servicios.Servicios
             }
         }
 
-        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        public List<Pais> GetPaises(string textoFiltro)
         {
             try
             {
-                return _repositorio.GetPaisesPorPagina(cantidad, paginaActual);
+                return _repositorio.GetPaises(textoFiltro);
             }
             catch (Exception)
             {

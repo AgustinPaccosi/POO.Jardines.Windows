@@ -57,17 +57,19 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
-        public int GetCantidad()
+        public int GetCantidad(int? paisId)
         {
             try
             {
-                return _repositorioCiudades.GetCantidad();
+                return _repositorioCiudades.GetCantidad(paisId);
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
+
         public int GetCantidadFiltrada(Pais pais)
         {
             try
@@ -79,24 +81,24 @@ namespace POO.Jardines.Servicios.Servicios
                 throw;
             }
         }
-        public List<Ciudad> GetCiudades()
-        {
-            try
-            {
-                var lista= _repositorioCiudades.GetCiudades();
-                foreach (var item in lista)
-                {
-                    item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId); 
-                }
-                return lista;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //public List<Ciudad> GetCiudades()
+        //{
+        //    try
+        //    {
+        //        var lista= _repositorioCiudades.GetCiudades();
+        //        foreach (var item in lista)
+        //        {
+        //            item.Pais = _repositorioPaises.GetPaisPorId(item.PaisId); 
+        //        }
+        //        return lista;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
-        public List<Ciudad> GetCiudades(int paisId)
+        public List<Ciudad> GetCiudades(int? paisId)
         {
             try
             {

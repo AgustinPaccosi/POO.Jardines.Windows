@@ -82,26 +82,31 @@ namespace POO.Jardines.Windows
         {
             frmClientesAE frm = new frmClientesAE(_serviciosClientes);
             DialogResult dr= frm.ShowDialog(this);
-            if(dr==DialogResult.Cancel) return;
-            try
+            if (dr == DialogResult.Cancel)
             {
-                Cliente cliente = frm.GetCliente();
-                if (!_serviciosClientes.Existe(cliente))
-                {
-                    _serviciosClientes.Guardar(cliente);
-                    var r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, cliente);
-                    GridHelper.AgregarFila(dgvDatos, r);
-                    RecargarGrilla();
-                    //corregir
-                }
-
+                RecargarGrilla();
+                return;
             }
-            catch (Exception)
-            {
+            
+            //try
+            //{
+            //    Cliente cliente = frm.GetCliente();
+            //    if (!_serviciosClientes.Existe(cliente))
+            //    {
+            //        _serviciosClientes.Guardar(cliente);
+            //        var r = GridHelper.ConstruirFila(dgvDatos);
+            //        GridHelper.SetearFila(r, cliente);
+            //        GridHelper.AgregarFila(dgvDatos, r);
+            //        RecargarGrilla();
+            //        //corregir
+            //    }
 
-                throw;
-            }
+            //}
+            //catch (Exception)
+            //{
+
+            //    throw;
+            //}
 
         }
         private void btnPrincipio_Click(object sender, EventArgs e)
@@ -208,6 +213,26 @@ namespace POO.Jardines.Windows
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+        private Pais paisFiltro;
+        private Ciudad ciudadFiltro;
+        private void porPaisYCiudadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBuscaPaisCiudad frm = new frmBuscaPaisCiudad() {Text="Seleccione Pais Y Ciudad" };
+            DialogResult dr= frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel) return;
+            try
+            {
+                paisFiltro = frm.GetPais();
+                ciudadFiltro = frm.GetCiudad();
+                listaClienteDto = _serviciosClientes.GetClientes(paisFiltro, ciudadFiltro);
+                MostrarDatosEnGrilla();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

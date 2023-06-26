@@ -43,16 +43,16 @@ namespace POO.Jardines.Servicios.Servicios
             try
             {
                 var listaclienteporpagina = _repositorioClientes.GetClientesPorPagina(registrosPorPagina, paginaActual);
-                foreach (var item in listaclienteporpagina)
-                {
-                    var pais=_repositorioPaises.GetPaisPorId(item.PaisId);
-                    item.NombrePais = pais.NombrePais;
-                }
-                foreach (var item in listaclienteporpagina)
-                {
-                    var ciudad = _repositorioCiudades.CiudadPorId(item.CiudadId);
-                    item.NombreCiudad=ciudad.NombreCiudad;
-                }
+                //foreach (var item in listaclienteporpagina)
+                //{
+                //    var pais=_repositorioPaises.GetPaisPorId(item.PaisId);
+                //    item.NombrePais = pais.NombrePais;
+                //}
+                //foreach (var item in listaclienteporpagina)
+                //{
+                //    var ciudad = _repositorioCiudades.CiudadPorId(item.CiudadId);
+                //    item.NombreCiudad=ciudad.NombreCiudad;
+                //}
                 return listaclienteporpagina;
             }
             catch (Exception)
@@ -67,17 +67,17 @@ namespace POO.Jardines.Servicios.Servicios
 			try
 			{
                 var listaclientes=_repositorioClientes.GetClientes();
-                foreach (var item in listaclientes)
-                {
-                    //Proxima Inner Join
-                    var pais = _repositorioPaises.GetPaisPorId(item.PaisId);
-                    item.NombrePais = pais.NombrePais;
-                }
-                foreach (var item in listaclientes)
-                {
-                    var ciudad = _repositorioCiudades.CiudadPorId(item.CiudadId);
-                    item.NombreCiudad = ciudad.NombreCiudad;
-                }
+                //foreach (var item in listaclientes)
+                //{
+                //    //Proxima Inner Join
+                //    var pais = _repositorioPaises.GetPaisPorId(item.PaisId);
+                //    item.NombrePais = pais.NombrePais;
+                //}
+                //foreach (var item in listaclientes)
+                //{
+                //    var ciudad = _repositorioCiudades.CiudadPorId(item.CiudadId);
+                //    item.NombreCiudad = ciudad.NombreCiudad;
+                //}
                 return listaclientes;
             }
 			catch (Exception)
@@ -138,6 +138,19 @@ namespace POO.Jardines.Servicios.Servicios
             try
             {
                 return _repositorioClientes.GetClientesPorId(clienteId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<ClienteListDto> GetClientes(Pais paisFiltro, Ciudad ciudadFiltro)
+        {
+            try
+            {
+                return _repositorioClientes.GetClientes(paisFiltro, ciudadFiltro);
             }
             catch (Exception)
             {

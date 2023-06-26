@@ -28,6 +28,9 @@ namespace POO.Jardines.Windows
         int registros = 0;
         int paginasTotales = 0;
         int registrosPorPagina = 5;
+
+        bool filtroOn = false;
+        string textoFiltro = null;
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             Close();
@@ -56,7 +59,8 @@ namespace POO.Jardines.Windows
                 GridHelper.SetearFila(r, pais);
                 GridHelper.AgregarFila(dgvDatos,r);
             }
-            LblCantidad.Text = _servicios.GetCantidad().ToString(); lblPaginas1.Text=paginaActual.ToString();
+            LblCantidad.Text = _servicios.GetCantidad().ToString(); 
+            lblPaginas1.Text=paginaActual.ToString();
             lblPaginas2.Text=paginasTotales.ToString();
         }
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -164,30 +168,60 @@ namespace POO.Jardines.Windows
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            frmPaisesSeleccionar frm = new frmPaisesSeleccionar() { Text = "Seleccionar Pais" };
-            DialogResult dr = frm.ShowDialog(this);
-            if (dr == DialogResult.Cancel)
+            if (!filtroOn)
             {
-                return;
-            }
-            try
-            {
-                var pais = frm.GetPais();
-                listapaises = _servicios.Filtrar(pais);
-                btnBuscar.BackColor = Color.Orange;
-                MostrarDatosEnGrilla();
+                frmBuscarPorNombre frm = new frmBuscarPorNombre();
+                DialogResult dr = frm.ShowDialog(this);
+                if (dr == DialogResult.Cancel) return;
+                try
+                {
+                    textoFiltro = frm.GetTexto();
+                    btnBuscar.BackColor = Color.Orange;
+                    filtroOn = true;
+                    listapaises = _servicios.GetPaises(textoFiltro);
+                    registros = _servicios.GetCantidad(textoFiltro);
+                    paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
+                    MostrarDatosEnGrilla();
+                    LblCantidad.Text = _servicios.GetCantidad(textoFiltro).ToString();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
 
             }
-            catch (Exception)
+            else
             {
-                throw;
+                MessageBox.Show("Filtro ACTIVO", "Advertencia",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            //frmPaisesSeleccionar frm = new frmPaisesSeleccionar() { Text = "Seleccionar Pais" };
+            //DialogResult dr = frm.ShowDialog(this);
+            //if (dr == DialogResult.Cancel)
+            //{
+            //    return;
+            //}
+            //try
+            //{
+            //    var pais = frm.GetPais();
+            //    listapaises = _servicios.Filtrar(pais);
+            //    btnBuscar.BackColor = Color.Orange;
+            //    MostrarDatosEnGrilla();
+
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
 
         }
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            RecargarGrilla();
+            filtroOn = false;
+            textoFiltro = null;
             btnBuscar.BackColor = Color.White;
+            RecargarGrilla();
         }
         private void RecargarGrilla()
         {
@@ -202,7 +236,7 @@ namespace POO.Jardines.Windows
                 return;
             }
             paginaActual++;
-            MostratPaginado();
+            MostrarPaginado();
         }
 
         private void btnAnterior_Click(object sender, EventArgs e)
@@ -212,24 +246,21 @@ namespace POO.Jardines.Windows
                 return;
             }
             paginaActual--;
-            MostratPaginado(); 
+            MostrarPaginado(); 
         }
-
         private void btnFin_Click(object sender, EventArgs e)
         {
             paginaActual = paginasTotales;
-            MostratPaginado();
+            MostrarPaginado();
         }
-
-
         private void btnPrincipio_Click(object sender, EventArgs e)
         {
             paginaActual = 1;
-            MostratPaginado();
+            MostrarPaginado();
         }
-        private void MostratPaginado()
+        private void MostrarPaginado()
         {
-            listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+            listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual, textoFiltro);
             RecargarGrilla();
         }
     }

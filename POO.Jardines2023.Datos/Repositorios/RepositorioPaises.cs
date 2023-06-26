@@ -125,7 +125,30 @@ namespace POO.Jardines2023.Datos.Repositorios
             }
         }
 
-        public int GetCantidad()
+        //public int GetCantidad()
+        //{
+        //    int cantidad = 0;
+        //    try
+        //    {
+        //        using (var conn = new SqlConnection(cadenaConexion))
+        //        {
+        //            conn.Open();
+        //            string CountQuery = "Select Count(*) FROM dbo.Paises";
+        //            using (var comando = new SqlCommand(CountQuery, conn))
+        //            {
+        //                cantidad = (int)comando.ExecuteScalar();
+        //            }
+
+        //        }
+        //        return cantidad;
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+        public int GetCantidad(string textoFiltro=null)
         {
             int cantidad = 0;
             try
@@ -133,9 +156,24 @@ namespace POO.Jardines2023.Datos.Repositorios
                 using (var conn = new SqlConnection(cadenaConexion))
                 {
                     conn.Open();
-                    string CountQuery = "Select Count(*) FROM dbo.Paises";
-                    using (var comando = new SqlCommand(CountQuery, conn))
+                    string SelectQuery;
+                    if (textoFiltro == null)
                     {
+                        SelectQuery = "Select Count(*) FROM dbo.Paises";
+                    }
+                    else
+                    {
+                        SelectQuery = "Select Count(*) FROM dbo.Paises WHERE NombrePais Like @textoFiltro"; 
+                    }
+                    using (var comando = new SqlCommand(SelectQuery, conn))
+                    {
+                        if(textoFiltro!=null)
+                        {
+                            comando.Parameters.Add("@textoFiltro", SqlDbType.NVarChar);
+                            comando.Parameters["@textoFiltro"].Value = $"{textoFiltro}%";
+
+                        }
+
                         cantidad = (int)comando.ExecuteScalar();
                     }
 
@@ -147,6 +185,7 @@ namespace POO.Jardines2023.Datos.Repositorios
 
                 throw;
             }
+
         }
 
         public bool Existe(Pais pais)
@@ -220,33 +259,7 @@ namespace POO.Jardines2023.Datos.Repositorios
             }
             return pais;
         }
-
-        public List<Pais> FiltrarPais(Pais pais)
-        {
-            List<Pais> listaPais = new List<Pais>();
-            using (var conn = new SqlConnection(cadenaConexion))
-            {
-                conn.Open();
-                string SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises WHERE PaisId=@PaisId ";
-                using (var comando = new SqlCommand(SelectQuery, conn))
-                {
-                    comando.Parameters.Add("@PaisId", SqlDbType.Int);
-                    comando.Parameters["@PaisId"].Value = pais.PaisId;
-
-                    using (var reader = comando.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var paiss = ConstruirPais(reader);
-                            listaPais.Add(paiss);
-                        }
-                    }
-                }
-            }
-            return listaPais;
-        }
-
-        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual)
+        public List<Pais> GetPaisesPorPagina(int cantidad, int paginaActual, string textoFiltro=null)
         {
             try
             {
@@ -254,14 +267,34 @@ namespace POO.Jardines2023.Datos.Repositorios
                 using (var conn = new SqlConnection(cadenaConexion))
                 {
                     conn.Open();
-                    string SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises ORDER BY NombrePais OFFSET @cantidadRegistros ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+                    string SelectQuery;
+                    if (textoFiltro==null)
+                    {
+                        SelectQuery = @"SELECT PaisId, NombrePais FROM dbo.Paises 
+                                    ORDER BY NombrePais OFFSET @cantidadRegistros   
+                                    ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+                    }
+                    else
+                    {
+                        SelectQuery = @"SELECT PaisId, NombrePais FROM dbo.Paises 
+                                    WHERE NombrePais LIKE @textoFiltro 
+                                    ORDER BY NombrePais OFFSET @cantidadRegistros   
+                                    ROWS FETCH NEXT @cantidadPorPagina ROWS ONLY";
+
+                    }
                     using (var comando = new SqlCommand(SelectQuery, conn))
                     {
                         comando.Parameters.Add("@cantidadRegistros", SqlDbType.Int);
-                        comando.Parameters["@cantidadRegistros"].Value=cantidad*(paginaActual-1);
+                        comando.Parameters["@cantidadRegistros"].Value = cantidad * (paginaActual - 1);
 
                         comando.Parameters.Add("@cantidadPorPagina", SqlDbType.Int);
-                        comando.Parameters["@cantidadPorPagina"].Value= cantidad;
+                        comando.Parameters["@cantidadPorPagina"].Value = cantidad;
+                        if (textoFiltro!=null)
+                        {
+                            comando.Parameters.Add("@textoFiltro", SqlDbType.NVarChar);
+                            comando.Parameters["@textoFiltro"].Value = $"{textoFiltro}%";
+
+                        }
                         using (var reader = comando.ExecuteReader())
                         {
                             while (reader.Read())
@@ -281,5 +314,67 @@ namespace POO.Jardines2023.Datos.Repositorios
             }
 
         }
+
+        //public List<Pais> FiltrarPais(Pais pais)
+        //{
+        //    List<Pais> listaPais = new List<Pais>();
+        //    using (var conn = new SqlConnection(cadenaConexion))
+        //    {
+        //        conn.Open();
+        //        string SelectQuery = "SELECT PaisId, NombrePais FROM dbo.Paises WHERE PaisId=@PaisId ";
+        //        using (var comando = new SqlCommand(SelectQuery, conn))
+        //        {
+        //            comando.Parameters.Add("@PaisId", SqlDbType.Int);
+        //            comando.Parameters["@PaisId"].Value = pais.PaisId;
+
+        //            using (var reader = comando.ExecuteReader())
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    var paiss = ConstruirPais(reader);
+        //                    listaPais.Add(paiss);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return listaPais;
+        //}
+
+
+        public List<Pais> GetPaises(string textoFiltro)
+        {
+            try
+            {
+                List<Pais> listaPais = new List<Pais>();
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string SelectQuery = @"SELECT PaisId, NombrePais 
+                            FROM dbo.Paises
+                            WHERE NombrePais LIKE @textoFiltro
+                            ORDER BY NombrePais";
+                    using (var comando = new SqlCommand(SelectQuery, conn))
+                    {
+                        comando.Parameters.Add("@textoFiltro", SqlDbType.NVarChar);
+                        comando.Parameters["@textoFiltro"].Value = $"{textoFiltro}%";
+
+                        using (var reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var paiss = ConstruirPais(reader);
+                                listaPais.Add(paiss);
+                            }
+                        }
+                    }
+                }
+                return listaPais;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }
