@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace POO.Jardines.Servicios.Servicios
 {
-    public class ServiciosCategorias : ServiciosCategoria
+    public class ServiciosCategorias : IServiciosCategoria
     {
         private readonly IRepositorioCategorias _repositorioCategorias;
         public ServiciosCategorias()

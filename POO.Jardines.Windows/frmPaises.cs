@@ -227,6 +227,8 @@ namespace POO.Jardines.Windows
         {
             //listapaises = _servicios.GetPaises();
             listapaises = _servicios.GetPaisesPorPagina(registrosPorPagina, paginaActual);
+            registros = _servicios.GetCantidad();
+            paginasTotales = FormHelper.CalcularPaginas(registros, registrosPorPagina);
             MostrarDatosEnGrilla();
         }
         private void btnSiguiente_Click(object sender, EventArgs e)

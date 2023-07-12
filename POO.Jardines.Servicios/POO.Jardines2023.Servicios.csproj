@@ -44,12 +44,14 @@
     <Compile Include="Interfaces\IServiciosCategoria.cs" />
     <Compile Include="Interfaces\IServiciosCiudades.cs" />
     <Compile Include="Interfaces\IServiciosClientes.cs" />
+    <Compile Include="Interfaces\IServiciosProductos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IServicioPaises.cs" />
     <Compile Include="Servicios\ServicioPaises.cs" />
     <Compile Include="Servicios\ServiciosCategorias.cs" />
     <Compile Include="Servicios\ServiciosCiudades.cs" />
     <Compile Include="Servicios\ServiciosClientes.cs" />
+    <Compile Include="Servicios\ServiciosProductos.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POO.Jardines2023.Datos\POO.Jardines2023.Datos.csproj">

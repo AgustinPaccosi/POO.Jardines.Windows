@@ -110,7 +110,6 @@ namespace POO.Jardines.Windows
 
                     throw;
                 }
-
             }
         }
 

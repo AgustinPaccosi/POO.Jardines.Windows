@@ -46,5 +46,11 @@ namespace POO.Jardines.Windows
             frm.ShowDialog(this);
 
         }
+
+        private void btnProduc_Click(object sender, EventArgs e)
+        {
+            frmProductos frm=new frmProductos();
+            frm.ShowDialog(this);
+        }
     }
 }

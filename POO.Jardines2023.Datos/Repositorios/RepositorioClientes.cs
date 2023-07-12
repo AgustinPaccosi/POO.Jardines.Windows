@@ -119,7 +119,6 @@ namespace POO.Jardines2023.Datos.Repositorios
                 }
             }
         }
-
         public bool Existe(Cliente cliente)
         {
             try

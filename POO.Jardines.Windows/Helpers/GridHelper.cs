@@ -1,10 +1,5 @@
 ﻿using POO.Jardines2023.Entidades.Entidades;
 using POO.Jardines2023.Entidades.Entidades.Dtos.Cliente;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace POO.Jardines.Windows.Helpers
@@ -39,8 +34,15 @@ namespace POO.Jardines.Windows.Helpers
                 case ClienteListDto cliente:
                     r.Cells[0].Value = cliente.NombrePais;
                     r.Cells[1].Value = cliente.NombreCiudad;
-                    r.Cells[2].Value = cliente.Apellido + ", "+ cliente.Nombre;
+                    r.Cells[2].Value = cliente.Apellido + ", " + cliente.Nombre;
                     break;
+                case Producto producto:
+                    r.Cells[0].Value = producto.NombreProducto;
+                    r.Cells[1].Value = producto.NombreLatin;
+                    r.Cells[2].Value = producto.Categoria;
+                    r.Cells[3].Value = producto.UnidadesEnStock;
+                    break;
+
 
             }
             r.Tag = obj;
@@ -50,7 +52,7 @@ namespace POO.Jardines.Windows.Helpers
             dgv.Rows.Add(r);
         }
 
-        public static void Quitarfila(DataGridView dgv,DataGridViewRow r)
+        public static void Quitarfila(DataGridView dgv, DataGridViewRow r)
         {
             dgv.Rows.Remove(r);
         }

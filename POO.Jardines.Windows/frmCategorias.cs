@@ -16,7 +16,7 @@ namespace POO.Jardines.Windows
 {
     public partial class frmCategorias : Form
     {
-        private readonly ServiciosCategoria _serviciosCategorias;
+        private readonly IServiciosCategoria _serviciosCategorias;
         private List<Categoria> listaCategorias;
         public frmCategorias()
         {
@@ -36,7 +36,6 @@ namespace POO.Jardines.Windows
                 throw;
             }
         }
-
         private void RecargarGrilla()
         {
             listaCategorias = _serviciosCategorias.GetCategorias();
@@ -63,7 +62,6 @@ namespace POO.Jardines.Windows
         {
             Close();
         }
-
         private void btnBorrar_Click(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0)
@@ -96,77 +94,79 @@ namespace POO.Jardines.Windows
         }
         private void btnNuevo_Click(object sender, EventArgs e)
         {
-            frmCategoriasAE frm = new frmCategoriasAE() { Text = "Agregar Pais" };
+            frmCategoriasAE frm = new frmCategoriasAE(_serviciosCategorias) { Text = "Agregar Pais" };
             DialogResult dr = frm.ShowDialog(this);
+            RecargarGrilla();
             if (dr == DialogResult.Cancel) { return; }
-            try
-            {
-                Categoria categoria = frm.GetCategoria();
-                if (!_serviciosCategorias.Existe(categoria))
-                {
-                    _serviciosCategorias.Guardar(categoria);
-                    DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
-                    GridHelper.SetearFila(r, categoria);
-                    GridHelper.AgregarFila(dgvDatos, r);
-
-                    MostrarCantidad();
-                    MessageBox.Show("Registro Agregado", "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("Registro Existente", "Mensaje",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message, "Mensaje",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            //if (dgvDatos.SelectedRows.Count == 0)
-            //{
-            //    return;
-            //}
-            //var r = dgvDatos.SelectedRows[0];
-            //Categoria categoria = (Categoria)r.Tag;
-            //Categoria categoriacopia = (Categoria)categoria.Clone();
             //try
             //{
-            //    frmCategoriasAE frm = new frmCategoriasAE() { Text = "Editar Categoria" };
-            //    frm.SetCategoria(categoria);
-
-            //    DialogResult dr = frm.ShowDialog(this);
-            //    if (dr == DialogResult.Cancel)
-            //    {
-            //        return;
-            //    }
-            //    categoria = frm.GetCategoria();
+            //    Categoria categoria = frm.GetCategoria();
             //    if (!_serviciosCategorias.Existe(categoria))
             //    {
             //        _serviciosCategorias.Guardar(categoria);
+            //        DataGridViewRow r = GridHelper.ConstruirFila(dgvDatos);
             //        GridHelper.SetearFila(r, categoria);
-            //        MessageBox.Show("El registro se edito Correctamente",
-            //            "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        GridHelper.AgregarFila(dgvDatos, r);
+
+            //        MostrarCantidad();
+            //        MessageBox.Show("Registro Agregado", "Mensaje",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Information);
             //    }
             //    else
             //    {
-            //        GridHelper.SetearFila(r, categoriacopia);
-            //        MessageBox.Show("Registro Duplicado", "Mensaje",
+            //        MessageBox.Show("Registro Existente", "Mensaje",
             //            MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    }
             //}
             //catch (Exception ex)
             //{
-            //    GridHelper.SetearFila(r, categoriacopia);
-            //    MessageBox.Show(ex.Message, "ERROR",
+
+            //    MessageBox.Show(ex.Message, "Mensaje",
             //        MessageBoxButtons.OK, MessageBoxIcon.Error);
             //}
+        }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dgvDatos.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            var r = dgvDatos.SelectedRows[0];
+            Categoria categoria = (Categoria)r.Tag;
+            Categoria categoriacopia = (Categoria)categoria.Clone();
+            try
+            {
+                frmCategoriasAE frm = new frmCategoriasAE(_serviciosCategorias) { Text = "Editar Categoria" };
+                frm.SetCategoria(categoria);
+
+                DialogResult dr = frm.ShowDialog(this);
+                RecargarGrilla();
+                if (dr == DialogResult.Cancel)
+                {
+                    return;
+                }
+                
+                //categoria = frm.GetCategoria();
+                //if (!_serviciosCategorias.Existe(categoria))
+                //{
+                //    _serviciosCategorias.Guardar(categoria);
+                //    GridHelper.SetearFila(r, categoria);
+                //    MessageBox.Show("El registro se edito Correctamente",
+                //        "Editar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //}
+                //else
+                //{
+                //    GridHelper.SetearFila(r, categoriacopia);
+                //    MessageBox.Show("Registro Duplicado", "Mensaje",
+                //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
+            }
+            catch (Exception ex)
+            {
+                GridHelper.SetearFila(r, categoriacopia);
+                MessageBox.Show(ex.Message, "ERROR",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
     }

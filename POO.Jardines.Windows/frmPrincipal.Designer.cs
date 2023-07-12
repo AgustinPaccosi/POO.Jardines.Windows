@@ -34,6 +34,7 @@
             this.btnCiudades = new System.Windows.Forms.Button();
             this.btnCategorias = new System.Windows.Forms.Button();
             this.btnClientes = new System.Windows.Forms.Button();
+            this.btnProduc = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnPaises
@@ -99,11 +100,25 @@
             this.btnClientes.UseVisualStyleBackColor = false;
             this.btnClientes.Click += new System.EventHandler(this.btnClientes_Click);
             // 
+            // btnProduc
+            // 
+            this.btnProduc.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnProduc.Image = global::POO.Jardines.Windows.Properties.Resources.used_product_50px;
+            this.btnProduc.Location = new System.Drawing.Point(93, 248);
+            this.btnProduc.Name = "btnProduc";
+            this.btnProduc.Size = new System.Drawing.Size(152, 122);
+            this.btnProduc.TabIndex = 4;
+            this.btnProduc.Text = "Productos";
+            this.btnProduc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnProduc.UseVisualStyleBackColor = false;
+            this.btnProduc.Click += new System.EventHandler(this.btnProduc_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 453);
+            this.Controls.Add(this.btnProduc);
             this.Controls.Add(this.btnClientes);
             this.Controls.Add(this.btnCategorias);
             this.Controls.Add(this.btnCiudades);
@@ -125,5 +140,6 @@
         private System.Windows.Forms.Button btnCiudades;
         private System.Windows.Forms.Button btnCategorias;
         private System.Windows.Forms.Button btnClientes;
+        private System.Windows.Forms.Button btnProduc;
     }
 }

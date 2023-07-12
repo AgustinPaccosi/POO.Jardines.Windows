@@ -66,7 +66,31 @@ namespace POO.Jardines2023.Datos.Repositorios
 
         public void Editar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var conn = new SqlConnection(cadenaConexion))
+                {
+                    conn.Open();
+                    string UpdateQuery = "UPDATE dbo.Categorias SET Descripcion=@Descripcion, NombreCategoria=@NombreCategoria WHERE CategoriaId=@CategoriaId";
+                    using (var cmd = new SqlCommand(UpdateQuery, conn))
+                    {
+                        cmd.Parameters.Add("@NombreCategoria", SqlDbType.NVarChar);
+                        cmd.Parameters["@NombreCategoria"].Value = categoria.NombreCategoria;
+
+                        cmd.Parameters.Add("@Descripcion", SqlDbType.NVarChar);
+                        cmd.Parameters["@Descripcion"].Value = categoria.Descripcion;
+
+                        cmd.Parameters.Add("@CategoriaId", SqlDbType.NVarChar);
+                        cmd.Parameters["@CategoriaId"].Value = categoria.CategoriaId;
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public bool Existe(Categoria categoria)
@@ -83,7 +107,6 @@ namespace POO.Jardines2023.Datos.Repositorios
                     {
                         comando.Parameters.Add("@NombreCategoria", SqlDbType.NVarChar);
                         comando.Parameters["@NombreCategoria"].Value = categoria.NombreCategoria;
-
                         cantidad = (int)comando.ExecuteScalar();
                     }
                 }

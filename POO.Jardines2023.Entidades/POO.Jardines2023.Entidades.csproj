@@ -46,6 +46,7 @@
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Dtos\Cliente\ClienteListDto.cs" />
     <Compile Include="Entidades\Pais.cs" />
+    <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

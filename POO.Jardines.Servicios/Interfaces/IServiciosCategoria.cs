@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace POO.Jardines.Servicios.Interfaces
 {
-    public interface ServiciosCategoria
+    public interface IServiciosCategoria
     {
         void Guardar(Categoria categoria);
         void Borrar(int categoriaId);
