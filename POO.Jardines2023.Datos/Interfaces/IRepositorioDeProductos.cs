@@ -9,6 +9,8 @@ namespace POO.Jardines2023.Datos.Interfaces
 {
     public interface IRepositorioDeProductos
     {
+        void Agregar(Producto producto);
+        bool Existe(Producto producto);
         List<Producto> GetProductos();
     }
 }

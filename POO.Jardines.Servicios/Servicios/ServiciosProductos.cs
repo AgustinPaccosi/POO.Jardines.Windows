@@ -10,10 +10,10 @@ namespace POO.Jardines.Servicios.Servicios
     public class ServiciosProductos : IServiciosProductos
     {
         private readonly IRepositorioDeProductos _repositorioDeProductos;
-        private readonly IRepositorioCategorias _serviciosCategoria;
+        private readonly IRepositorioCategorias _repositorioCategoria;
         public ServiciosProductos()
         {
-            _serviciosCategoria = new RepositorioCategorias();
+            _repositorioCategoria = new RepositorioCategorias();
             _repositorioDeProductos = new RepositorioDeProductos();
 
         }
@@ -22,6 +22,12 @@ namespace POO.Jardines.Servicios.Servicios
             try
             {
                 var listaProd = _repositorioDeProductos.GetProductos();
+                foreach (var item in listaProd)
+                {
+                    var categoria = _repositorioCategoria.GetCategoriaPorId(item.CategoriaId);
+                    //item.Categoria = categoria.NombreCategoria;
+                }
+
                 return listaProd;
             }
             catch (Exception)
@@ -37,7 +43,15 @@ namespace POO.Jardines.Servicios.Servicios
 
         public bool Existe(Producto producto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _repositorioDeProductos.Existe(producto);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public int GetCantidad()
@@ -53,7 +67,23 @@ namespace POO.Jardines.Servicios.Servicios
 
         public void Guardar(Producto producto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (producto.ProductoId == 0)
+                {
+                    _repositorioDeProductos.Agregar(producto);
+                }
+                else
+                {
+                    //_repositorioDeProductos.Editar(producto);
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

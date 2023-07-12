@@ -136,6 +136,37 @@ namespace POO.Jardines2023.Datos.Repositorios
             return cantidad;
         }
 
+        public Categoria GetCategoriaPorId(int CategoriaId)
+        {
+            Categoria categoria = null;
+            using (var conn = new SqlConnection(cadenaConexion))
+            {
+                conn.Open();
+                string SelectQuery = "SELECT CategoriaId, NombreCategoria FROM dbo.Categoria WHERE CategoriaId=@CategoriaId";
+                using (var cmd = new SqlCommand(SelectQuery, conn))
+                {
+                    cmd.Parameters.Add("@CategoriaId", SqlDbType.Int);
+                    cmd.Parameters["@CategoriaId"].Value = CategoriaId;
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            categoria = new Categoria()
+                            {
+                                CategoriaId = reader.GetInt32(0),
+
+                                NombreCategoria = reader.GetString(1)
+                            };
+
+                        }
+                    }
+                }
+            }
+            return categoria;
+
+        }
+
         public List<Categoria> GetCategorias()
         {
             try

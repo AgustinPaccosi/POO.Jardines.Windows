@@ -12,7 +12,7 @@ namespace POO.Jardines2023.Entidades.Entidades
         public string NombreProducto { get; set;}
         public string NombreLatin {get; set;}
         public int CategoriaId { get; set;}
-        public string Categoria { get; set;}
+        public Categoria Categoria { get; set;}
         public int UnidadesEnStock { get; set;}
         public int NivelDeReposicion { get; set;}
     }

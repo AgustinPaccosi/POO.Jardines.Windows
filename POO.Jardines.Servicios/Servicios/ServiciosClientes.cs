@@ -46,7 +46,7 @@ namespace POO.Jardines.Servicios.Servicios
                 var listaclienteporpagina = _repositorioClientes.GetClientesPorPagina(registrosPorPagina, paginaActual);
                 //foreach (var item in listaclienteporpagina)
                 //{
-                //    var pais=_repositorioPaises.GetPaisPorId(item.PaisId);
+                //    var pais = _repositorioPaises.GetPaisPorId(item.PaisId);
                 //    item.NombrePais = pais.NombrePais;
                 //}
                 //foreach (var item in listaclienteporpagina)

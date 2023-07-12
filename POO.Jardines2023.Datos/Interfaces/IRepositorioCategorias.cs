@@ -14,6 +14,7 @@ namespace POO.Jardines2023.Datos.Interfaces
         void Editar(Categoria categoria);
         bool Existe(Categoria categoria);
         int GetCantidad();
+        Categoria GetCategoriaPorId(int categoriaId);
         List<Categoria> GetCategorias();
     }
 }

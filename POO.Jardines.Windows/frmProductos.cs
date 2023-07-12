@@ -55,5 +55,16 @@ namespace POO.Jardines.Windows
             //lblPaginas2.Text = paginasTotales.ToString();
         }
 
+        private void btnNuevo_Click(object sender, EventArgs e)
+        {
+            frmProductosAE frm= new frmProductosAE(_serviciosProdutos);
+            DialogResult dr=new DialogResult();
+            frm.ShowDialog(this);
+            if (dr == DialogResult.Cancel)
+            {
+                return;
+            }
+
+        }
     }
 }

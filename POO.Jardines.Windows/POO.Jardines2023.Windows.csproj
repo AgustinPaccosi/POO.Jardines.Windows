@@ -123,6 +123,12 @@
     <Compile Include="frmProductos.Designer.cs">
       <DependentUpon>frmProductos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmProductosAE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProductosAE.Designer.cs">
+      <DependentUpon>frmProductosAE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CombosHelper.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\GridHelper.cs" />
@@ -190,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmProductos.resx">
       <DependentUpon>frmProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProductosAE.resx">
+      <DependentUpon>frmProductosAE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -41,7 +41,22 @@ namespace POO.Jardines.Windows.Helpers
             combo.DisplayMember = "NombreCiudad";
             combo.ValueMember = "CiudadId";
             combo.SelectedIndex = 0;
-
         }
+        public static void CargarComboCategoria(ref ComboBox combo)
+        {
+            IServiciosCategoria servicioCategorias = new ServiciosCategorias();
+            var listaCategorias = servicioCategorias.GetCategorias();
+            var defaultCategoria = new Categoria()
+            {
+                CategoriaId = 0,
+                NombreCategoria = "Seleccionar Categoria"
+            };
+            listaCategorias.Insert(0, defaultCategoria);
+            combo.DataSource = listaCategorias;
+            combo.DisplayMember = "NombreCategoria";
+            combo.ValueMember = "CategoriaId";
+            combo.SelectedIndex = 0;
+        }
+
     }
 }
